@@ -1,7 +1,7 @@
 #ifndef CUB_H
 # define CUB_H
 
-# include <mlx.h>
+# include "./mlx_linux/mlx.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
