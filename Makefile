@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/31 19:23:35 by hmiyazak          #+#    #+#              #
-#    Updated: 2024/07/31 20:11:26 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/08/01 17:06:53 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ INCLUDES_DIR = ./includes
 CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES_DIR)
 MLXOBJFLAGS = -I/usr/include -Imlx_linux -O3
 MLXFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
-SRCS =	main.c
+SRCS =	main.c draw_wall.c
 OBJS = $(SRCS:.c=.o)
 # LIBDIR = ./libft
 # LIBFT = $(LIBDIR)/libft.a
