@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:28:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/01 17:18:49 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/02 12:07:42 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,23 @@
 
 int	main(void)
 {
-	t_mlx	mlx;
-	t_vec	pos;
-	t_vec	w_start;
-	t_vec	w_end;
+	t_mlx		mlx;
+	t_user		user;
+	t_wall		wall;
+	t_keyprops	keyprops;
 
 	mlx.mlx = mlx_init();
 	mlx.window = mlx_new_window(mlx.mlx, WIN_WIDTH, WIN_HEIGHT, "Walls");
-	vec_init(&pos, 0, 0);
-	vec_init(&w_start, -2, 5);
-	vec_init(&w_end, 2, 5);
-	if (draw_wall(&mlx, &pos, &w_start, &w_end) == 0)
-		write(1, "success\n", 8);
-	else
-		write(2, "error\n", 6);
+	mlx.new_img = mlx_new_image(mlx.mlx, WIN_WIDTH, WIN_HEIGHT);
+	vec_init(&user.pos, 0, 0);
+	user.dir = EAST;
+	vec_init(&wall.start, -2, 5);
+	vec_init(&wall.end, 2, 5);
+	keyprops.mlx = &mlx;
+	keyprops.user = &user;
+	keyprops.wall = &wall;
+	set_mlx_hooks(&keyprops);
+	draw_wall(&mlx, &user, &(wall.start), &(wall.end));
 	mlx_loop(mlx.mlx);
 	return (0);
 }
