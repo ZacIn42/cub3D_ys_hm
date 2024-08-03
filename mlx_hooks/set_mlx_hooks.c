@@ -6,45 +6,35 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 09:09:12 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/02 12:11:09 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:54:20 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static int	key_hook(int key_code, t_keyprops *keyprops);
+static int	key_hook(int key_code, t_cub *cub);
 
-int	set_mlx_hooks(t_keyprops *keyprops)
+int	set_mlx_hooks(t_cub *cub)
 {
-	t_mlx	*mlx;
-
-	mlx = keyprops->mlx;
-	mlx_hook(mlx->window, ON_KEYDOWN, 1L << 0, key_hook, keyprops);
+	mlx_hook(cub->window, ON_KEYDOWN, 1L << 0, key_hook, cub);
 	return (0);
 }
 
-static int	key_hook(int key_code, t_keyprops *keyprops)
+static int	key_hook(int key_code, t_cub *cub)
 {
-	t_mlx	*mlx;
-	t_user	*user;
-	t_wall	*wall;
-
-	mlx = keyprops->mlx;
-	user = keyprops->user;
-	wall = keyprops->wall;
 	printf("keycode: %d\n", key_code);
 	if (is_look_key(key_code))
-		look_around(key_code, user);
+		look_around(key_code, &cub->field->user);
 	else if (key_code == MOVE_FORWARD_KEY || key_code == MOVE_BACK_KEY \
 			|| key_code == MOVE_LEFT_KEY || key_code == MOVE_RIGHT_KEY)
-		move(key_code, user);
+		move(key_code, &cub->field->user);
 	else if (key_code == ESC_KEY)
-		return (close_window_esc(key_code, mlx));
+		return (close_window_esc(key_code, cub));
 	else
 		return (1);
-	mlx_clear_window(mlx->mlx, mlx->window);
-	mlx_destroy_image(mlx->mlx, mlx->new_img);
-	mlx->new_img = mlx_new_image(mlx->mlx, WIN_WIDTH, WIN_HEIGHT);
-	draw_wall(mlx, user, &(wall->start), &(wall->end));
+	// mlx_clear_window(mlx->mlx, mlx->window);
+	// mlx_destroy_image(mlx->mlx, mlx->img->img);
+	// mlx->img->img = mlx_new_image(mlx->mlx, WIN_WIDTH, WIN_HEIGHT);
+	// draw_wall(mlx, user, &(wall->start), &(wall->end));
 	return (0);
 }

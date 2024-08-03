@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:44:42 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/02 12:08:12 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:37:57 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 #define SEP_NUM (500)
 
-static void		put_vertical_line(t_mlx *mlx, t_vec *pos, t_vec *dest, \
+static void		put_vertical_line(t_cub *mlx, t_vec *pos, t_vec *dest, \
 												t_dir direction, int index);
 static double	calc_perp_dist(t_vec *pos, t_vec *dest, t_dir direction);
 
-int	draw_wall(t_mlx *mlx, t_user *user, t_vec *w_start, t_vec *w_end)
+int	draw_wall(t_cub *mlx, t_user *user, t_vec *w_start, t_vec *w_end)
 {
 	t_vec	target;
 	int		index;
@@ -32,11 +32,11 @@ int	draw_wall(t_mlx *mlx, t_user *user, t_vec *w_start, t_vec *w_end)
 		put_vertical_line(mlx, &user->pos, &target, user->dir, index);
 		index += 1;
 	}
-	mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->new_img, 1, 1);
+	mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->img->img, 1, 1);
 	return (0);
 }
 
-static void	put_vertical_line(t_mlx *mlx, t_vec *pos, t_vec *dest, t_dir direction, int index)
+static void	put_vertical_line(t_cub *mlx, t_vec *pos, t_vec *dest, t_dir direction, int index)
 {
 	t_img	img;
 	int		line_height;
@@ -52,18 +52,12 @@ static void	put_vertical_line(t_mlx *mlx, t_vec *pos, t_vec *dest, t_dir directi
 		draw_end = WIN_HEIGHT - 1;
 	while (draw_start < draw_end)
 	{
-		// mlx_pixel_put(mlx->mlx, mlx->new_img, WIN_WIDTH / 2 + index, draw_start, 0xFFFFFF);
-		char	*data_addr = mlx_get_data_addr(mlx->new_img, &img.bits_per_pixel, &img.line_length, &img.endian);
+		// mlx_pixel_put(mlx->mlx, mlx->img->img, WIN_WIDTH / 2 + index, draw_start, 0xFFFFFF);
+		char	*data_addr = mlx_get_data_addr(mlx->img->img, &img.bits_per_pixel, &img.line_length, &img.endian);
 		int pos = (draw_start * img.line_length + (WIN_WIDTH / 2 + index) * (img.bits_per_pixel / 8));
 		*(unsigned int *)(data_addr + pos) = 0xFFFFFF;
 		draw_start++;
 	}
 }
 
-static double	calc_perp_dist(t_vec *pos, t_vec *dest, t_dir direction)
-{
-	if (direction == NORTH || direction == SOUTH)
-		return (dest->y - pos->y);
-	else
-		return (dest->x - pos->x);
-}
+

@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:25:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/03 13:43:01 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/03 18:27:15 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,16 @@
 # include <stdbool.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/time.h>
 # include <fcntl.h>
 # include <errno.h>
-# include <sys/time.h>
+# include <limits.h>
+# include <string.h>
 
 # define WIN_HEIGHT (2048)
 # define WIN_WIDTH (2048)
-# define BLOCK_HEIGHT (1024)
-# define BLOCK_WIDTH (1024)
-# define THETA_START (30.0)
-# define THETA_END (150.0)
-
-typedef struct s_mlx_info {
-	void	*mlx;
-	void	*window;
-	void	*new_img;
-}	t_mlx;
+// # define BLOCK_HEIGHT (1024)
+// # define BLOCK_WIDTH (1024)
 
 typedef struct s_vec {
 	double	x;
@@ -50,21 +44,10 @@ typedef enum e_direction {
 	WEST,
 }	t_dir;
 
-typedef struct s_user_info {
+typedef struct s_user {
 	t_vec	pos;
 	t_dir	dir;
 }	t_user;
-
-typedef struct s_wall_info {
-	t_vec	start;
-	t_vec	end;
-}	t_wall;
-
-typedef struct s_keyhook_props {
-	t_mlx	*mlx;
-	t_user	*user;
-	t_wall	*wall;
-}	t_keyprops;
 
 typedef struct s_img {
 	void	*img;
@@ -75,6 +58,22 @@ typedef struct s_img {
 	int		line_length;
 	int		endian;
 }	t_img;
+
+typedef struct s_field {
+	char			**map;
+	t_user			user;
+	char			texture_paths[4][PATH_MAX];
+	t_img			textures[4];
+	unsigned int	c_color;
+	unsigned int	f_color;
+}	t_field;
+
+typedef struct s_cub {
+	void	*mlx;
+	void	*window;
+	t_img	img;
+	t_field	*field;
+}	t_cub;
 
 enum {
 	ON_KEYDOWN = 2,
@@ -99,12 +98,12 @@ enum {
 void	vec_init(t_vec *vec, double x, double y);
 void	vec_add(t_vec *ans, t_vec *lhs, t_vec *rhs);
 void	vec_sub(t_vec *ans, t_vec *lhs, t_vec *rhs);
-int		draw_wall(t_mlx *mlx, t_user *user, t_vec *w_start, t_vec *w_end);
+// int		draw_wall(t_cub *mlx, t_user *user, t_vec *w_start, t_vec *w_end);
 t_vec	*cast_ray_alloc(const t_vec *pos, double theta, const char **map);
-int		set_mlx_hooks(t_keyprops *keyprops);
+int		set_mlx_hooks(t_cub *cub);
 int		move(int key_code, t_user *user);
 bool	is_look_key(int key_code);
 int		look_around(int key_code, t_user *user);
-int		close_window_esc(int key_code, t_mlx *mlx);
+int		close_window_esc(int key_code, t_cub *mlx);
 
 #endif
