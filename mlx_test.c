@@ -6,12 +6,11 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 16:17:29 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/02 17:56:01 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/03 15:37:33 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mlx.h>
-#include <stdlib.h>
+#include <cub.h>
 
 #define WIDTH 800
 #define HEIGHT 600
