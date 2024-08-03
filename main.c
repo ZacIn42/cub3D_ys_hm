@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:28:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/03 18:31:46 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/03 19:29:31 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(void)
 	if (init_textures(cub.mlx, &field) != 0)
 		exit(1);
 	set_mlx_hooks(&cub);
-	// // draw_wall(&mlx, &user, &(wall.start), &(wall.end));
+	draw_wall(&cub, &field);
 	mlx_loop(cub.mlx);
 	return (0);
 }
@@ -45,7 +45,7 @@ static int	parse_file(t_field *field)
 	};
 
 	field->map = &map[0];
-	vec_init(&field->user.pos, 4.5, 3.5);
+	vec_init(&field->user.pos, 1.5, 1.5);
 	field->user.dir = NORTH;
 	strcpy(field->texture_paths[NORTH], "./images/tile.xpm");
 	strcpy(field->texture_paths[EAST], "./images/tile.xpm");
@@ -64,7 +64,7 @@ static int	init_cub(t_cub *cub, t_field *field)
 	cub->img.width = WIN_WIDTH;
 	cub->img.height = WIN_HEIGHT;
 	cub->img.addr = mlx_get_data_addr(cub->img.img, \
-		&cub->img.bits_per_pixel, &cub->img.line_length, &cub->img.endian);
+		&cub->img.b_p_pixel, &cub->img.line_len, &cub->img.endian);
 	cub->field = field;
 	return (0);
 }
@@ -85,7 +85,7 @@ static int	init_textures(void *mlx, t_field *fld)
 static int	init_img(void *mlx, t_img *img, char *file_path)
 {
 	img->img = mlx_xpm_file_to_image(mlx, file_path, &img->width, &img->height);
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, \
-									&img->line_length, &img->endian);
+	img->addr = mlx_get_data_addr(img->img, &img->b_p_pixel, \
+									&img->line_len, &img->endian);
 	return (0);
 }

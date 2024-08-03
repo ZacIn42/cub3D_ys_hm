@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/31 19:23:35 by hmiyazak          #+#    #+#              #
-#    Updated: 2024/08/03 17:54:52 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/08/03 19:17:11 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRCS =	main.c \
 		$(HOOKS_DIR)/move.c \
 		$(HOOKS_DIR)/close_window_esc.c \
 		$(HOOKS_DIR)/set_mlx_hooks.c \
-		# $(DRAW_DIR)/draw_wall.c \
+		$(DRAW_DIR)/draw_wall.c \
+		$(DRAW_DIR)/draw_vertical.c \
 		$(DRAW_DIR)/cast_ray.c
 OBJS = $(SRCS:.c=.o)
 TEST_SRCS = $(filter-out main.c, $(SRCS))

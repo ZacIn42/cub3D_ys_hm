@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 15:31:19 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/03 17:37:57 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/03 21:15:21 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,55 +14,94 @@
 
 #define PRECISION (0.01f)
 
-static t_img	*set_texture(t_cub *mlx, t_user *user, t_vec *spot);
+static t_img	*set_texture(t_field *field, t_vec *spot);
+static int		calc_canvas_index(t_img *canvas, int x, int h, int iter);
+static int	calc_texture_index(t_img *texture, t_vec *spot, int h, int iter);
 static double	calc_perp_dist(t_user *user, t_vec *dest);
 
-int	draw_vertical(t_cub *mlx, t_user *user, t_vec *spot, int x)
+int	draw_vertical(t_cub *cub, t_user *user, t_vec *spot, int x)
 {
 	t_img	*canvas;
 	t_img	*texture;
 	int		h;
-	int		h_iter;
+	int		iter;
 
-	canvas = mlx->img;
-	texture = set_texture(mlx, user, spot);
+	canvas = &cub->img;
+	texture = set_texture(cub->field, spot);
 	h = (double)WIN_HEIGHT / calc_perp_dist(user, spot);
-	h_iter = WIN_HEIGHT / 2 - h / 2;
-	if (h_iter < 0)
-		h_iter = 0;
-	while (h_iter < WIN_HEIGHT / 2 + h / 2 && h_iter < WIN_HEIGHT)
+	iter = 0;
+	while (iter < h && iter - h / 2 < WIN_HEIGHT / 2)
 	{
-		
-		h_iter += 1;
+		canvas->addr[calc_canvas_index(canvas, x, h, iter)] = \
+			texture->addr[calc_texture_index(texture, spot, h, iter)];
+		canvas->addr[calc_canvas_index(canvas, x, h, iter) + 1] = \
+			texture->addr[calc_texture_index(texture, spot, h, iter) + 1];
+		canvas->addr[calc_canvas_index(canvas, x, h, iter) + 2] = \
+			texture->addr[calc_texture_index(texture, spot, h, iter) + 2];
+		canvas->addr[calc_canvas_index(canvas, x, h, iter) + 3] = \
+			texture->addr[calc_texture_index(texture, spot, h, iter) + 3];
+		iter += 1;
 	}
 	return (0);
 }
 
-static t_img	*set_texture(t_cub *mlx, t_user *user, t_vec *spot)
+static int	calc_canvas_index(t_img *canvas, int x, int h, int iter)
+{
+	int	y;
+
+	y = canvas->height / 2 - h / 2 + iter;
+	if (y < 0)
+		y = 0;
+	return (y * canvas->line_len + x * (canvas->b_p_pixel / 8));
+}
+
+static int	calc_texture_index(t_img *texture, t_vec *spot, int h, int iter)
+{
+	int	x;
+	int	y;
+
+	if (spot->x == (int)spot->x)
+		x = texture->width * (spot->y - (int)spot->y);
+	else
+		x = texture->width * (spot->x - (int)spot->x);
+	y = texture->height * iter / h;
+	// printf("%d, %d\n\n", x, y);
+	return (y * texture->line_len + x * (texture->b_p_pixel / 8));
+}
+
+
+static t_img	*set_texture(t_field *field, t_vec *spot)
 {
 	t_vec	*pos;
 
-	pos = user->pos;
+	pos = &field->user.pos;
 	if (spot->x - (double)(int)spot->x < PRECISION)
 	{
 		if (pos->x <= spot->x)
-			return (&mlx->texture.west);
+			return (&field->textures[WEST]);
 		else
-			return (&mlx->texture.east);
+			return (&field->textures[EAST]);
 	}
 	else
 	{
-		if (pos->y <= spot.y)
-			return (&mlx->texture.north);
+		if (pos->y <= spot->y)
+			return (&field->textures[NORTH]);
 		else
-			return (&mlx->texture.south);
+			return (&field->textures[SOUTH]);
 	}
 }
 
 static double	calc_perp_dist(t_user *user, t_vec *dest)
 {
-	if (user->dir == NORTH || dir == SOUTH)
-		return (dest->y - pos->y);
+	double	dist;
+
+	if (user->dir == NORTH || user->dir == SOUTH)
+		dist = dest->y - user->pos.y;
 	else
-		return (dest->x - pos->x);
+		dist = dest->x - user->pos.x;
+	if (dist < 0)
+		dist *= -1;
+	if (dist < 1)
+		dist = 1;
+	return (dist);
 }

@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:25:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/03 18:27:15 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/03 19:16:05 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ typedef struct s_img {
 	char	*addr;
 	int		width;
 	int		height;
-	int		bits_per_pixel;
-	int		line_length;
+	int		b_p_pixel;
+	int		line_len;
 	int		endian;
 }	t_img;
 
@@ -98,8 +98,9 @@ enum {
 void	vec_init(t_vec *vec, double x, double y);
 void	vec_add(t_vec *ans, t_vec *lhs, t_vec *rhs);
 void	vec_sub(t_vec *ans, t_vec *lhs, t_vec *rhs);
-// int		draw_wall(t_cub *mlx, t_user *user, t_vec *w_start, t_vec *w_end);
-t_vec	*cast_ray_alloc(const t_vec *pos, double theta, const char **map);
+int		draw_wall(t_cub *cub, t_field *field);
+int		draw_vertical(t_cub *cub, t_user *user, t_vec *spot, int x);
+t_vec	*cast_ray_alloc(const t_vec *pos, double theta, char **map);
 int		set_mlx_hooks(t_cub *cub);
 int		move(int key_code, t_user *user);
 bool	is_look_key(int key_code);

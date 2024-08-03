@@ -6,16 +6,16 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 12:46:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/03 14:42:47 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/03 20:37:42 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
 static void	set_next_border(t_vec *pos, double theta, int *x, int *y);
-static bool	is_block(const char **map, int x, int y);
+static bool	is_block(char **map, int x, int y);
 
-t_vec	*cast_ray_alloc(const t_vec *pos, double theta, const char **map)
+t_vec	*cast_ray_alloc(const t_vec *pos, double theta, char **map)
 {
 	t_vec	*current_ray;
 	int		next_x;
@@ -38,22 +38,24 @@ t_vec	*cast_ray_alloc(const t_vec *pos, double theta, const char **map)
 
 static void	set_next_border(t_vec *current_ray, double theta, int *x, int *y)
 {
-	if (((*x) + 1 - current_ray->x) * tan(theta) < ((*y) + 1 - current_ray->y))
+	if (theta != M_PI / 2 && \
+		fabs((*x + 1 - current_ray->x) * tan(theta)) < \
+			fabs((*y + 1 - current_ray->y)))
 	{
 		*x += 1;
-		printf("tan %f\n", tan(M_PI));
 		current_ray->y += (*x - current_ray->x) * tan(theta);
 		current_ray->x = *x;
 	}
 	else
 	{
 		*y += 1;
-		current_ray->x += (*y - current_ray->y) / tan(theta);
+		if (theta != M_PI / 2)
+			current_ray->x += (*y - current_ray->y) / tan(theta);
 		current_ray->y = *y;
 	}
 }
 
-static bool	is_block(const char **map, int x, int y)
+static bool	is_block(char **map, int x, int y)
 {
 	return (map[y][x] == '1');
 }

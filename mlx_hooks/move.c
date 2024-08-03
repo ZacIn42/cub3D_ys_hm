@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 08:55:23 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/02 10:27:18 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/03 20:31:44 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int	move_left(t_user *user);
 
 int	move(int key_code, t_user *user)
 {
-	printf("%f, %f\n", user->pos.x, user->pos.y);
 	if (user == NULL)
 		return (1);
 	if (key_code == MOVE_FORWARD_KEY)

@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 08:46:04 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/02 10:31:30 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/03 20:51:42 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ bool	is_look_key(int key_code)
 
 int	look_around(int key_code, t_user *user)
 {
-	printf("%d\n", user->dir);
 	if (key_code == LOOK_LEFT_KEY)
 		return (look_left(user));
 	else if (key_code == LOOK_RIGHT_KEY)

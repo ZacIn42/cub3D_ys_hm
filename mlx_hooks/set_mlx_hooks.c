@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 09:09:12 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/03 17:54:20 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/03 20:51:39 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ static int	key_hook(int key_code, t_cub *cub)
 		return (close_window_esc(key_code, cub));
 	else
 		return (1);
-	// mlx_clear_window(mlx->mlx, mlx->window);
-	// mlx_destroy_image(mlx->mlx, mlx->img->img);
-	// mlx->img->img = mlx_new_image(mlx->mlx, WIN_WIDTH, WIN_HEIGHT);
-	// draw_wall(mlx, user, &(wall->start), &(wall->end));
+	printf("%d\n", cub->field->user.dir);
+	printf("%f, %f\n", cub->field->user.pos.x, cub->field->user.pos.y);
+	mlx_clear_window(cub->mlx, cub->window);
+	mlx_destroy_image(cub->mlx, cub->img.img);
+	cub->img.img = mlx_new_image(cub->mlx, WIN_WIDTH, WIN_HEIGHT);
+	draw_wall(cub, cub->field);
 	return (0);
 }
