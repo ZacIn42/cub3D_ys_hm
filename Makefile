@@ -6,13 +6,12 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/31 19:23:35 by hmiyazak          #+#    #+#              #
-#    Updated: 2024/08/02 10:05:11 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/08/03 14:43:21 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
-INCLUDES_DIR = ./includes
 CFLAGS = -Wall -Wextra -Werror -I.
 MLXOBJFLAGS = -I/usr/include -Imlx_linux -O3
 MLXFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
@@ -25,8 +24,12 @@ SRCS =	main.c \
 		$(HOOKS_DIR)/move.c \
 		$(HOOKS_DIR)/close_window_esc.c \
 		$(HOOKS_DIR)/set_mlx_hooks.c \
-		$(DRAW_DIR)/draw_wall.c
+		$(DRAW_DIR)/draw_wall.c \
+		$(DRAW_DIR)/cast_ray.c
 OBJS = $(SRCS:.c=.o)
+TEST_SRCS = $(filter-out main.c, $(SRCS))
+TEST_SRCS += test.c
+TEST_OBJS = $(TEST_SRCS:.c=.o)
 # LIBDIR = ./libft
 # LIBFT = $(LIBDIR)/libft.a
 
@@ -39,12 +42,15 @@ all: $(NAME)
 $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) ./mlx_linux/libmlx_Linux.a -o $@
 
+test: $(TEST_OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(MLXFLAGS) $(TEST_OBJS) ./mlx_linux/libmlx_Linux.a -o test
+
 # $(LIBFT):
 # 	$(MAKE) -C $(LIBDIR)
 
 clean:
 # $(MAKE) clean -C $(LIBDIR)
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(TEST_OBJS)
 
 fclean: clean
 # $(MAKE) fclean -C $(LIBDIR)

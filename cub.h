@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:25:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/02 12:00:32 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/03 13:43:01 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define WIN_WIDTH (2048)
 # define BLOCK_HEIGHT (1024)
 # define BLOCK_WIDTH (1024)
+# define THETA_START (30.0)
+# define THETA_END (150.0)
 
 typedef struct s_mlx_info {
 	void	*mlx;
@@ -98,6 +100,7 @@ void	vec_init(t_vec *vec, double x, double y);
 void	vec_add(t_vec *ans, t_vec *lhs, t_vec *rhs);
 void	vec_sub(t_vec *ans, t_vec *lhs, t_vec *rhs);
 int		draw_wall(t_mlx *mlx, t_user *user, t_vec *w_start, t_vec *w_end);
+t_vec	*cast_ray_alloc(const t_vec *pos, double theta, const char **map);
 int		set_mlx_hooks(t_keyprops *keyprops);
 int		move(int key_code, t_user *user);
 bool	is_look_key(int key_code);
