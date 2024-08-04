@@ -6,7 +6,7 @@
 #    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/31 19:23:35 by hmiyazak          #+#    #+#              #
-#    Updated: 2024/08/03 17:40:50 by yususato         ###   ########.fr        #
+#    Updated: 2024/08/03 21:35:08 by yususato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ INCLUDES_DIR = ./includes
 CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES_DIR)
 MLXOBJFLAGS = -I/usr/include -Imlx_linux -O3
 MLXFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
-SRCS =	clear_window.c
+SRCS =	ray_cast.c
 OBJS = $(SRCS:.c=.o)
 # LIBDIR = ./libft
 # LIBFT = $(LIBDIR)/libft.a

@@ -169,7 +169,7 @@ int main()
     player.dirX = -1.0;
     player.dirY = 0.0;
     player.planeX = 0.0;
-    player.planeY = 0.66;
+    player.planeY = 10;
 
     // メインループ
     while (1)
