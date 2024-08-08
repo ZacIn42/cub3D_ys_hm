@@ -29,6 +29,7 @@
 
 # define WIN_HEIGHT (2048)
 # define WIN_WIDTH (2048)
+# define MAP_LENGTH (1024)
 // # define BLOCK_HEIGHT (1024)
 // # define BLOCK_WIDTH (1024)
 
@@ -66,6 +67,10 @@ typedef struct s_field {
 	t_img			textures[4];
 	unsigned int	c_color;
 	unsigned int	f_color;
+	char			*map_line;
+	int				pos_x;
+	int				pos_y;
+	int				max_map_line;
 }	t_field;
 
 typedef struct s_cub {
