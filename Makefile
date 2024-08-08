@@ -14,7 +14,7 @@ NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I.
 MLXOBJFLAGS = -I/usr/include -Imlx_linux -O3
-MLXFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+MLXFLAGS = -L./minilibx-linux -lmlx -L/opt/X11/lib -I/opt/X11/include -lX11 -lXext -lm -lz
 DRAW_DIR = ./draw_scene
 STRUCT_DIR = ./struct_handlers
 HOOKS_DIR = ./mlx_hooks
@@ -26,7 +26,13 @@ SRCS =	main.c \
 		$(HOOKS_DIR)/set_mlx_hooks.c \
 		$(DRAW_DIR)/draw_wall.c \
 		$(DRAW_DIR)/draw_vertical.c \
-		$(DRAW_DIR)/cast_ray.c
+		$(DRAW_DIR)/cast_ray.c \
+		./parse_file/parse_arg.c \
+		./parse_file/parse_valid_map.c \
+		./parse_file/parse_map.c \
+		./parse_file/get_next_line.c \
+		./utils.c
+		
 OBJS = $(SRCS:.c=.o)
 TEST_SRCS = $(filter-out main.c, $(SRCS))
 TEST_SRCS += test.c
@@ -41,7 +47,7 @@ TEST_OBJS = $(TEST_SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) ./mlx_linux/libmlx_Linux.a -o $@
+	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) -o $@
 
 test: $(TEST_OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(MLXFLAGS) $(TEST_OBJS) ./mlx_linux/libmlx_Linux.a -o test

@@ -14,21 +14,14 @@
 
 int	main(int argc, char *argv[])
 {
-	const char	*map[5] = {
-		"111111",
-		"100101",
-		"101001",
-		"1100N1",
-		"111111",
-	};
-	t_vec		pos;
-	t_vec		*point;
+	char *c;
 
-	(void)argc;
-	(void)argv;
-	vec_init(&pos, 3.5, 2.5);
-	point = cast_ray_alloc(&pos, M_PI / 2, &map[0]);
-	printf("%f, %f\n", point->x, point->y);
-	free(point);
+	c = (char *)malloc(sizeof(char) * 5);
+	int i = 0;
+	while(c[i] != NULL)
+	{
+		c[i] = '1';
+		i++;
+	}
 	return (0);
 }

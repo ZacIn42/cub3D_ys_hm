@@ -1,6 +1,29 @@
 #include "cub.h"
 
-char	*ft_strjoin_new(char *s1, char *s2, t_map *field)
+char	*ft_strdup_new(char *src)
+{
+	int		i;
+	char	*new;
+
+	i = 0;
+	if (src == NULL)
+		return (NULL);
+	new = (char *)malloc(sizeof(char) * strlen(src));
+	if (new == NULL)
+		return (NULL);
+	while (src[i] != '\0')
+	{
+		new[i] = src[i];
+		i++;
+	}
+	if (strchr(new, '\n') && i != 0)
+		new[i - 1] = '\0';
+	else
+		new[i] = '\0';
+	return (new);
+}
+
+char	*ft_strjoin_new(char *s1, char *s2)
 {
 	char	*new;
 	size_t	len1;
@@ -10,36 +33,36 @@ char	*ft_strjoin_new(char *s1, char *s2, t_map *field)
 		return (NULL);
 	if (!s1)
 		return (NULL);
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
+	len1 = strlen(s1);
+	len2 = strlen(s2);
 	new = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
 	if (!new)
 		return (NULL);
-	ft_strlcpy(new, s1, len1 + 1);
-	ft_strlcpy(new + len1, s2, len2 + 1);
-	if (ft_strchr(new, '\n'))
+	strlcpy(new, s1, len1 + 1);
+	strlcpy(new + len1, s2, len2 + 1);
+	if (strchr(new, '\n'))
 		new[len1 + len2 - 1] = '\0';
 	return (new);
 }
 
-char	*ft_temp_sj(t_map *field, char *line)
+char	*ft_temp_sj(t_field *field, char *line)
 {
 	char	*tmp;
 
 	if (line == NULL)
 		return (field->map_line);
-	tmp = ft_strjoin_new(field->map_line, line, field);
+	tmp = ft_strjoin_new(field->map_line, line);
 	if (field->map_line)
 		free (field->map_line);
 	if (!tmp)
 	{
 		free(line);
-		ft_exit();
+		exit(0);
 	}
 	return (tmp);
 }
 
-void    check_valid_map(t_field *field, char **map)
+void    check_valid_map(t_field *field)
 {
 	int	height;
 	int width;
@@ -48,21 +71,21 @@ void    check_valid_map(t_field *field, char **map)
 	height = 0;
 	width = 0;
 	pos_count = 0;
-	while (map[height])
+	while (field->map[height])
 	{
-		while (map[height][width])
+		while (field->map[height][width])
 		{
-			if (field->map_line[height] == 'N' \
-				field->map_line[height] == 'S' \
-				field->map_line[height] == 'W' \
-				field->map_line[height] == 'E')
+			if (field->map[height][width] == 'N' \
+				|| field->map[height][width] == 'S' \
+				|| field->map[height][width] == 'W' \
+				|| field->map[height][width] == 'E')
 			{
-				play++;
+				pos_count++;
 				field->pos_x = height;
 				field->pos_y = width;
 			}
-			else if (field->map_line[height] != '1' \
-				|| field->map_line[height] != '0')
+			else if (field->map[height][width] != '1' \
+				|| field->map[height][width] != '0')
 			{
 				printf("Error map\n");
 				exit(0);
@@ -72,62 +95,56 @@ void    check_valid_map(t_field *field, char **map)
 		width = 0;
 		height++;
 	}
-	if (play != 1)
-		ft_exit();
-	check_map(field, map);
+	if (pos_count != 1)
+		exit(0);
+	check_map(field);
 }
 
-void	insert_map_tmp(t_field *field, char	**map, char *new_line, int *index)
+void	insert_map_tmp(t_field *field, char *new_line)
 {
 	int		i;
 	int		len;
-	char	*map;
 
 	i = 0;
 	len = 0;
-	len = ft_strlen(new_line);
-	map = (char *)ft_calloc(sizeof(char) * len);
-	if (index != 0 && len > field->max_map_line)
+	len = strlen(new_line);
+	if (field->height != 0 && len > field->max_map_line)
 		field->max_map_line = len;
-	while (field->map_line[i])
-	{
-		map[i] = field->map_line[i];
+	while (field->map[i])
 		i++;
-	}
-	map[index] = new_line;
+	field->map[field->height] = new_line;
 	return ;
 }
 
-static void	read_map(char *map, t_field *field)
+void	read_map(char *map, t_field *field)
 {
-	int		index;
 	int		fd;
 	char	*line;
 	char	*new_line;
-	char	**map_tmp;
 
-	index = 0;
 	field->map_line = 0;
-	map_tmp = (char **)ft_calloc(sizeof(char *) * 2);
+	field->height = 0;
+	field->map = (char **)malloc(sizeof(char *) * 2);\
+	field->map[1] = NULL;
 	fd = open(map, O_RDONLY);
 	line = get_next_line(fd);
 	new_line = ft_strdup_new(line);
 	if (new_line == NULL)
 		exit(0);
-	insert_map_tmp(field, map_tmp, new_line, &index);
+	insert_map_tmp(field, new_line);
 	free(line);
 	new_line = field->map_line;
 	while (new_line)
 	{
 		field->height++;
 		new_line = get_next_line(fd);
-		if (!new_line)
-			free_double_point(map_str);
-		insert_map_tmp(field, map_tmp, new_line, &index);
-		index++;
+		// if (!new_line)
+		// 	free_double_point(map_str);
+		field->height++;
+		insert_map_tmp(field, new_line);
 		field->map_line = ft_temp_sj(field, new_line);
 		free(new_line);
 	}
 	close(fd);
-	check_valid_map(field, map_tmp);
+	check_valid_map(field);
 }

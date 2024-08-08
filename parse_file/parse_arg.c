@@ -1,14 +1,14 @@
 #include "cub.h"
 
-static void	check_filename(int ac, char *av)
+void	check_filename(int ac, char *av)
 {
-	char	*a;
+	char	*file;
 
 	if (ac != 2)
-		ft_exit();
-	a = ft_strrchr(av, '.');
-	if (a == NULL)
-		ft_exit();
-	if (ft_strncmp(a, ".ber\0", 5) != 0)
-		ft_exit();
+		exit(0);
+	file = strrchr(av, '.');
+	if (file == NULL)
+		exit(0);
+	if (strncmp(file, ".ber\0", 5) != 0)
+		exit(0);
 }
