@@ -33,14 +33,14 @@ char	*ft_strjoin_new(char *s1, char *s2)
 		return (NULL);
 	if (!s1)
 		return (NULL);
-	len1 = strlen(s1);
-	len2 = strlen(s2);
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
 	new = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
 	if (!new)
 		return (NULL);
-	strlcpy(new, s1, len1 + 1);
-	strlcpy(new + len1, s2, len2 + 1);
-	if (strchr(new, '\n'))
+	ft_strlcpy(new, s1, len1 + 1);
+	ft_strlcpy(new + len1, s2, len2 + 1);
+	if (ft_strchr(new, '\n'))
 		new[len1 + len2 - 1] = '\0';
 	return (new);
 }
