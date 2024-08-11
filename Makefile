@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
+#    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/31 19:23:35 by hmiyazak          #+#    #+#              #
-#    Updated: 2024/08/03 19:17:11 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/08/10 17:36:18 by yususato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I.
 MLXOBJFLAGS = -I/usr/include -Imlx_linux -O3
-MLXFLAGS = -L./minilibx-linux -lmlx -L/opt/X11/lib -I/opt/X11/include -lX11 -lXext -lm -lz
+MLXFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 DRAW_DIR = ./draw_scene
 STRUCT_DIR = ./struct_handlers
 HOOKS_DIR = ./mlx_hooks
@@ -27,11 +27,11 @@ SRCS =	main.c \
 		$(DRAW_DIR)/draw_wall.c \
 		$(DRAW_DIR)/draw_vertical.c \
 		$(DRAW_DIR)/cast_ray.c \
-		./parse_file/parse_arg.c \
-		./parse_file/parse_valid_map.c \
-		./parse_file/parse_map.c \
-		./parse_file/get_next_line.c \
-		./utils.c
+		utils.c \
+		parse_file/parse_map.c \
+		parse_file/parse_valid_map.c \
+		parse_file/parse_arg.c \
+		parse_file/get_next_line.c
 		
 OBJS = $(SRCS:.c=.o)
 TEST_SRCS = $(filter-out main.c, $(SRCS))
@@ -47,7 +47,7 @@ TEST_OBJS = $(TEST_SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) -o $@
+	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) ./mlx_linux/libmlx_Linux.a -o $@
 
 test: $(TEST_OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(MLXFLAGS) $(TEST_OBJS) ./mlx_linux/libmlx_Linux.a -o test

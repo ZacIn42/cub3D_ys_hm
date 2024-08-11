@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_vertical.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 15:31:19 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/03 21:15:21 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/11 18:55:55 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static int	calc_texture_index(t_img *texture, t_vec *spot, int h, int iter)
 	// printf("%d, %d\n\n", x, y);
 	return (y * texture->line_len + x * (texture->b_p_pixel / 8));
 }
-
 
 static t_img	*set_texture(t_field *field, t_vec *spot)
 {

@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:25:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/10 15:33:37 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/10 19:03:08 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_field {
 	int				top;
 	int				height;
 	int				width;
+	int				height_count;
 }	t_field;
 
 typedef struct s_cub {

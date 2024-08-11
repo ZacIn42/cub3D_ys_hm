@@ -9,6 +9,6 @@ void	check_filename(int ac, char *av)
 	file = strrchr(av, '.');
 	if (file == NULL)
 		exit(0);
-	if (strncmp(file, ".ber\0", 5) != 0)
+	if (strncmp(file, ".cub\0", 5) != 0)
 		exit(0);
 }
