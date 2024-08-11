@@ -80,8 +80,6 @@ bool	pass_find(t_field *field, t_vec *stack, bool visited[MAX_SIZE][MAX_SIZE])
 			i++;
 		}
 	}
-				printf("rrrddd%d,%d\n",field->yi,field->xi);
-
 	return (true);
 }
 
@@ -116,7 +114,7 @@ void	check_map(t_field *field)
 	}
 	node.x = field->pos_x;
 	node.y = field->pos_y;
-	printf("rrr%d,%d\n",field->pos_y,field->pos_x);
+	// printf("rrr%d,%d\n",field->pos_y,field->pos_x);
 	stack[field->top] = node;
 	visited[field->pos_y][field->pos_x] = true;
 	if (!pass_find(field, stack, visited))
