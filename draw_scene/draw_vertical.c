@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 15:31:19 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/11 18:55:55 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/12 12:11:52 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static t_img	*set_texture(t_field *field, t_vec *spot);
 static int		calc_canvas_index(t_img *canvas, int x, int h, int iter);
-static int	calc_texture_index(t_img *texture, t_vec *spot, int h, int iter);
+static int		calc_texture_index(t_img *texture, t_vec *spot, int h, int iter);
 static double	calc_perp_dist(t_user *user, t_vec *dest);
 
 int	draw_vertical(t_cub *cub, t_user *user, t_vec *spot, int x)

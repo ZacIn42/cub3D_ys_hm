@@ -6,7 +6,7 @@
 #    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/31 19:23:35 by hmiyazak          #+#    #+#              #
-#    Updated: 2024/08/10 17:36:18 by yususato         ###   ########.fr        #
+#    Updated: 2024/08/13 14:32:11 by yususato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ SRCS =	main.c \
 		parse_file/parse_map.c \
 		parse_file/parse_valid_map.c \
 		parse_file/parse_arg.c \
-		parse_file/get_next_line.c
+		parse_file/get_next_line.c \
+		parse_file/parse_utils.c
 		
 OBJS = $(SRCS:.c=.o)
 TEST_SRCS = $(filter-out main.c, $(SRCS))

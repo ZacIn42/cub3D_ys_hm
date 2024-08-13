@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:28:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/11 18:59:48 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:24:49 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	main(int ac, char **av)
 
 	if (parse_file(&field, ac, av) != 0)
 		exit(1);
-	write(1,"o\n",2);
+	write(1,"clear!\n",7);
+	exit(0);
 	if (init_cub(&cub, &field) != 0)
 		exit(1);
 	if (init_textures(cub.mlx, &field) != 0)
