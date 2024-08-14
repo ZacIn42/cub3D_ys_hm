@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 08:55:23 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/03 20:31:44 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/14 11:27:42 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ int	move(int key_code, t_user *user)
 static int	move_forward(t_user *user)
 {
 	if (user->dir == NORTH)
-		user->pos.y += 0.1;
+		user->pos.y -= 0.1;
 	else if (user->dir == EAST)
 		user->pos.x += 0.1;
 	else if (user->dir == SOUTH)
-		user->pos.y -= 0.1;
+		user->pos.y += 0.1;
 	else if (user->dir == WEST)
 		user->pos.x -= 0.1;
 	else
@@ -53,11 +53,11 @@ static int	move_right(t_user *user)
 	if (user->dir == NORTH)
 		user->pos.x += 0.1;
 	else if (user->dir == EAST)
-		user->pos.y -= 0.1;
+		user->pos.y += 0.1;
 	else if (user->dir == SOUTH)
 		user->pos.x -= 0.1;
 	else if (user->dir == WEST)
-		user->pos.y += 0.1;
+		user->pos.y -= 0.1;
 	else
 		return (1);
 	return (0);
@@ -66,11 +66,11 @@ static int	move_right(t_user *user)
 static int	move_back(t_user *user)
 {
 	if (user->dir == NORTH)
-		user->pos.y -= 0.1;
+		user->pos.y += 0.1;
 	else if (user->dir == EAST)
 		user->pos.x -= 0.1;
 	else if (user->dir == SOUTH)
-		user->pos.y += 0.1;
+		user->pos.y -= 0.1;
 	else if (user->dir == WEST)
 		user->pos.x += 0.1;
 	else
@@ -83,11 +83,11 @@ static int	move_left(t_user *user)
 	if (user->dir == NORTH)
 		user->pos.x -= 0.1;
 	else if (user->dir == EAST)
-		user->pos.y += 0.1;
+		user->pos.y -= 0.1;
 	else if (user->dir == SOUTH)
 		user->pos.x += 0.1;
 	else if (user->dir == WEST)
-		user->pos.y -= 0.1;
+		user->pos.y += 0.1;
 	else
 		return (1);
 	return (0);
