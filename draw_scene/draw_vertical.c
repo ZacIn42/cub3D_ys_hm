@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 15:31:19 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/14 09:34:06 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:29:41 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static t_img	*set_texture(t_field *field, t_vec *spot);
 static int		calc_canvas_index(t_img *canvas, int x, int h, int iter);
-static int		calc_texture_index(t_img *texture, t_vec *spot, int h, int iter);
+static int		calc_texture_index(t_img *texture, t_vec *spot, int h, int i);
 static double	calc_perp_dist(t_user *user, t_vec *dest);
 
 int	draw_vertical(t_cub *cub, t_user *user, t_vec *spot, int x)
@@ -94,15 +94,8 @@ static t_img	*set_texture(t_field *field, t_vec *spot)
 
 static double	calc_perp_dist(t_user *user, t_vec *dest)
 {
-	double	dist;
-
 	if (user->dir == NORTH || user->dir == SOUTH)
-		dist = dest->y - user->pos.y;
+		return (fabs(dest->y - user->pos.y));
 	else
-		dist = dest->x - user->pos.x;
-	if (dist < 0)
-		dist *= -1;
-	if (dist < 1)
-		dist = 1;
-	return (dist);
+		return (fabs(dest->x - user->pos.x));
 }
