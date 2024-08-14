@@ -29,8 +29,15 @@
 
 # define WIN_HEIGHT (2048)
 # define WIN_WIDTH (2048)
+# define MAX_SIZE (1024)
 // # define BLOCK_HEIGHT (1024)
 // # define BLOCK_WIDTH (1024)
+
+# ifndef BUFFER_SIZE
+
+#  define BUFFER_SIZE 100
+
+# endif
 
 typedef struct s_vec {
 	double	x;
@@ -66,6 +73,15 @@ typedef struct s_field {
 	t_img			textures[4];
 	unsigned int	c_color;
 	unsigned int	f_color;
+	char			*map_line;
+	int				pos_x;
+	int				pos_y;
+	int				max_map_line;
+	int				xi;
+	int				yi;
+	int				top;
+	int				height;
+	int				width;
 }	t_field;
 
 typedef struct s_cub {
@@ -106,5 +122,16 @@ int		move(int key_code, t_user *user);
 bool	is_look_key(int key_code);
 int		look_around(int key_code, t_user *user);
 int		close_window_esc(int key_code, t_cub *mlx);
+void	check_filename(int ac, char *av);
+void	read_map(char *map, t_field *field);
+void	check_map(t_field *field);
+char	*get_next_line(int fd);
+char	*ft_strchr(const char *s, int c);
+void	ft_bzero(void *s, size_t n);
+void	*ft_calloc(size_t count, size_t size);
+char	*ft_strdup(const char *src);
+size_t	ft_strlen(const char *s);
+char	*ft_strjoin(char const *s1, char const *s2);
+size_t	ft_strlcpy(char *dest, const char *src, size_t n);
 
 #endif

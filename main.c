@@ -12,17 +12,17 @@
 
 #include "cub.h"
 
-static int	parse_file(t_field *field);
+static int	parse_file(t_field *field, int ac, char **av);
 static int	init_cub(t_cub *cub, t_field *field);
 static int	init_img(void *mlx, t_img *img, char *file_path);
 static int	init_textures(void *mlx, t_field *field);
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	t_field		field;
 	t_cub		cub;
 
-	if (parse_file(&field) != 0)
+	if (parse_file(&field, ac, av) != 0)
 		exit(1);
 	if (init_cub(&cub, &field) != 0)
 		exit(1);
@@ -34,24 +34,10 @@ int	main(void)
 	return (0);
 }
 
-static int	parse_file(t_field *field)
+static int	parse_file(t_field *field, int ac, char **av)
 {
-	// static char	*map[5] = {
-	// 	"111111",
-	// 	"100101",
-	// 	"101001",
-	// 	"1100N1",
-	// 	"111111",
-	// };
-	static char	*map[5] = {
-		"111111",
-		"100001",
-		"10N001",
-		"100001",
-		"111111",
-	};
-
-	field->map = &map[0];
+	check_filename(ac, av[1]);
+	read_map(av[1], field);
 	vec_init(&field->user.pos, 1.5, 1.5);
 	field->user.dir = NORTH;
 	strcpy(field->texture_paths[NORTH], "./images/tile.xpm");

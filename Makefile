@@ -26,7 +26,12 @@ SRCS =	main.c \
 		$(HOOKS_DIR)/set_mlx_hooks.c \
 		$(DRAW_DIR)/draw_wall.c \
 		$(DRAW_DIR)/draw_vertical.c \
-		$(DRAW_DIR)/cast_ray.c
+		$(DRAW_DIR)/cast_ray.c \
+		./parse_file/parse_arg.c \
+		./parse_file/parse_valid_map.c \
+		./parse_file/parse_map.c \
+		./parse_file/get_next_line.c \
+		./utils.c
 OBJS = $(SRCS:.c=.o)
 TEST_SRCS = $(filter-out main.c, $(SRCS))
 TEST_SRCS += test.c
