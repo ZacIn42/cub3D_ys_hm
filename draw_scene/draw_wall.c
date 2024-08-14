@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:44:42 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/14 11:07:47 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:53:07 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	draw_wall(t_cub *cub, t_field *field)
 	t_vec	*spot;
 	int		x;
 
+	if (refresh_image(&cub->img, field->c_color, field->f_color) != 0)
+		return (1);
 	view_angle = M_PI * 2 / 3;
 	theta = field->user.dir * (M_PI / 2) - view_angle / 2;
 	theta_step = view_angle / WIN_WIDTH;

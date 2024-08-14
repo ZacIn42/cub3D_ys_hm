@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:25:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/14 10:03:32 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/14 16:30:33 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	vec_sub(t_vec *ans, t_vec *lhs, t_vec *rhs);
 int		draw_wall(t_cub *cub, t_field *field);
 int		draw_vertical(t_cub *cub, t_user *user, t_vec *spot, int x);
 t_vec	*cast_ray_alloc(const t_vec *pos, double theta, char **map);
+int		refresh_image(t_img *canvas, unsigned int c_c, unsigned int f_c);
 int		set_mlx_hooks(t_cub *cub);
 int		move(int key_code, t_user *user);
 bool	is_look_key(int key_code);

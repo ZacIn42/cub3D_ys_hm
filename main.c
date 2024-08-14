@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:28:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/14 14:46:30 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/14 16:24:09 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	parse_file(t_field *field)
 	strcpy(field->texture_paths[EAST], "./images/yellowbucks.xpm");
 	strcpy(field->texture_paths[SOUTH], "./images/tile.xpm");
 	strcpy(field->texture_paths[WEST], "./images/tile.xpm");
-	field->c_color = 0xFF0000;
+	field->c_color = 0xFFFFFF;
 	field->f_color = 0x00FF00;
 	return (0);
 }
