@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:25:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/03 19:16:05 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:03:32 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ typedef struct s_vec {
 }	t_vec;
 
 typedef enum e_direction {
-	NORTH,
-	EAST,
-	SOUTH,
-	WEST,
+	EAST = 0,
+	SOUTH = 1,
+	WEST = 2,
+	NORTH = 3,
 }	t_dir;
 
 typedef struct s_user {
