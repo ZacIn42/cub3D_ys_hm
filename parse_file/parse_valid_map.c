@@ -59,7 +59,7 @@ void	can_pass(t_field *field, t_vec *stack, bool visited[MAX_SIZE][MAX_SIZE])
 	if (visited[field->yi][field->xi] == false
 		&& check_space(field))
 	{
-		if (field->yi == 0 || field->yi == field->height_count - 1\
+		if (field->yi == 0 || field->yi == field->height - 1\
 			|| field->xi == 0 || field->xi == (int)ft_strlen(field->map[field->yi -1]) - 1)
 				exit(0);
 		if (check_wall(field) == false)
@@ -115,4 +115,43 @@ void	check_map(t_field *field)
 	visited[field->pos_y][field->pos_x] = true;
 	if (!pass_find(field, stack, visited))
 		exit(0);
+}
+
+void	check_valid_map(t_field *field)
+{
+	int	height;
+	int width;
+	int pos_count;
+
+	height = 0;
+	width = 0;
+	pos_count = 0;
+	while (field->map[height])
+	{
+		while (field->map[height][width] && field->map[height][width] != '\0')
+		{
+			if (field->map[height][width] == 'N' \
+				|| field->map[height][width] == 'S' \
+				|| field->map[height][width] == 'W' \
+				|| field->map[height][width] == 'E')
+			{
+				pos_count++;
+				field->pos_x = width;
+				field->pos_y = height;
+			}
+			else if (field->map[height][width] != '1' \
+				&& field->map[height][width] != '0' \
+				&& field->map[height][width] != ' ')
+			{
+				printf("Error map\n");
+				exit(0);
+			}
+			width++;
+		}
+		width = 0;
+		height++;
+	}
+	if (pos_count != 1)
+		exit(0);
+	check_map(field);
 }

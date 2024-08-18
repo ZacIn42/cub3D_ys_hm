@@ -21,6 +21,7 @@ int	move(int key_code, t_user *user)
 {
 	if (user == NULL)
 		return (1);
+	if (check_walk(key_code, user));
 	if (key_code == MOVE_FORWARD_KEY)
 		return (move_forward(user));
 	else if (key_code == MOVE_RIGHT_KEY)

@@ -73,16 +73,13 @@ typedef struct s_field {
 	t_img			textures[4];
 	unsigned int	c_color;
 	unsigned int	f_color;
-	char			*map_line;
 	int				pos_x;
 	int				pos_y;
-	int				max_map_line;
 	int				xi;
 	int				yi;
 	int				top;
 	int				height;
 	int				width;
-	int				height_count;
 }	t_field;
 
 typedef struct s_cub {
@@ -138,5 +135,7 @@ char	*ft_temp_sj(t_field *field, char *line);
 char	*ft_strjoin_new(char *s1, char *s2);
 char	*ft_strdup_new(char *src);
 void	*ft_memset(void *b, int c, size_t len);
+void	check_valid_map(t_field *field);
+int		count_file_height(int fd);
 
 #endif
