@@ -17,11 +17,12 @@ static int	move_right(t_user *user);
 static int	move_back(t_user *user);
 static int	move_left(t_user *user);
 
-int	move(int key_code, t_user *user)
+int	move(int key_code, t_user *user, t_field *field)
 {
 	if (user == NULL)
 		return (1);
-	if (check_walk(key_code, user));
+	if (check_walk(key_code, user, field) == false)
+		return (1);
 	if (key_code == MOVE_FORWARD_KEY)
 		return (move_forward(user));
 	else if (key_code == MOVE_RIGHT_KEY)

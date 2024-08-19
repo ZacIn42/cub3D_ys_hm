@@ -27,7 +27,7 @@ static int	key_hook(int key_code, t_cub *cub)
 		look_around(key_code, &cub->field->user);
 	else if (key_code == MOVE_FORWARD_KEY || key_code == MOVE_BACK_KEY \
 			|| key_code == MOVE_LEFT_KEY || key_code == MOVE_RIGHT_KEY)
-		move(key_code, &cub->field->user);
+		move(key_code, &cub->field->user, cub->field);
 	else if (key_code == ESC_KEY)
 		return (close_window_esc(key_code, cub));
 	else

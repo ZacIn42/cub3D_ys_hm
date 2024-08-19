@@ -22,7 +22,6 @@ void	read_map(char *map, t_field *field)
 	char	*new_line;
 
 	index = 0;
-	field->map_line = 0;
 	field->height = 1;
 	fd = open(map, O_RDONLY);
 	field->height += count_file_height(fd);

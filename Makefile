@@ -32,7 +32,7 @@ SRCS =	main.c \
 		parse_file/parse_valid_map.c \
 		parse_file/parse_arg.c \
 		parse_file/get_next_line.c \
-		parse_file/parse_utils.c
+		parse_file/parse_check_height.c \
 
 OBJS = $(SRCS:.c=.o)
 TEST_SRCS = $(filter-out main.c, $(SRCS))

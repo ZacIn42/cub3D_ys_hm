@@ -116,7 +116,7 @@ int		draw_wall(t_cub *cub, t_field *field);
 int		draw_vertical(t_cub *cub, t_user *user, t_vec *spot, int x);
 t_vec	*cast_ray_alloc(const t_vec *pos, double theta, char **map);
 int		set_mlx_hooks(t_cub *cub);
-int		move(int key_code, t_user *user);
+int		move(int key_code, t_user *user, t_field *field);
 bool	is_look_key(int key_code);
 int		look_around(int key_code, t_user *user);
 int		close_window_esc(int key_code, t_cub *mlx);
@@ -137,5 +137,7 @@ char	*ft_strdup_new(char *src);
 void	*ft_memset(void *b, int c, size_t len);
 void	check_valid_map(t_field *field);
 int		count_file_height(int fd);
+bool	check_walk(int key_code, t_user *user, t_field *field);
+
 
 #endif
