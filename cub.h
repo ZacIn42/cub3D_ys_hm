@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:25:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/14 16:30:33 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/22 08:07:55 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@
 # include <limits.h>
 # include <string.h>
 
-# define WIN_HEIGHT (2048)
-# define WIN_WIDTH (2048)
-// # define BLOCK_HEIGHT (1024)
-// # define BLOCK_WIDTH (1024)
+# define WIN_HEIGHT (768)
+# define WIN_WIDTH (768)
 
 typedef struct s_vec {
 	double	x;
