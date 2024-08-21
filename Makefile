@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/31 19:23:35 by hmiyazak          #+#    #+#              #
-#    Updated: 2024/08/14 15:53:32 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/08/22 08:18:15 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS =	main.c \
 		$(HOOKS_DIR)/look_around.c \
 		$(HOOKS_DIR)/move.c \
 		$(HOOKS_DIR)/close_window_esc.c \
+		$(HOOKS_DIR)/close_window_cross.c \
 		$(HOOKS_DIR)/set_mlx_hooks.c \
 		$(DRAW_DIR)/draw_wall.c \
 		$(DRAW_DIR)/draw_vertical.c \

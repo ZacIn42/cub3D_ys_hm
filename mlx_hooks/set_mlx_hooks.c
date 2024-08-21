@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 09:09:12 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/14 15:51:52 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/22 08:40:24 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	key_hook(int key_code, t_cub *cub);
 int	set_mlx_hooks(t_cub *cub)
 {
 	mlx_hook(cub->window, ON_KEYDOWN, 1L << 0, key_hook, cub);
+	mlx_hook(cub->window, ON_DESTROY, 1L << 2, close_window_cross, cub);
 	return (0);
 }
 

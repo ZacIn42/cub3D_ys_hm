@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:25:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/22 08:07:55 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/22 08:41:24 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,10 @@ enum {
 	ESC_KEY = 65307,
 };
 
+enum {
+	CROSS_BUTTON = 1,
+};
+
 void	vec_init(t_vec *vec, double x, double y);
 void	vec_add(t_vec *ans, t_vec *lhs, t_vec *rhs);
 void	vec_sub(t_vec *ans, t_vec *lhs, t_vec *rhs);
@@ -105,5 +109,6 @@ int		move(int key_code, t_user *user);
 bool	is_look_key(int key_code);
 int		look_around(int key_code, t_user *user);
 int		close_window_esc(int key_code, t_cub *mlx);
+int		close_window_cross(t_cub *cub);
 
 #endif
