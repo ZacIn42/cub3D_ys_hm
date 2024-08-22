@@ -1,16 +1,9 @@
 #include "cub.h"
 
-bool	check_space(t_field *field)
+bool	check_space(t_field *field, t_parse *parse)
 {
-				// printf("rrr%d,%d\n",field->yi,field->xi);
-				// printf("rrr%p\n",field->map);
-
-				// printf("rrr%s\n",field->map[field->yi]);
-
-	if (field->map[field->yi][field->xi] == '0')
-	{
+	if (field->map[parse->yi][parse->xi] == '0')
 		return (true);
-	}
 	return (false);
 }
 
@@ -21,80 +14,75 @@ bool	check_first_pos(t_field *field, int yi, int xi)
 		|| field->map[yi][xi] == 'W' \
 		|| field->map[yi][xi] == 'E')
 		return (true);
-	write(1,"x\n",2);
 	return (false);
 }
 
-bool	check_wall(t_field *field)
+bool	check_wall(t_field *field, t_parse *parse)
 {
-	if (field->map[field->yi][field->xi - 1] != '1' \
-		&& field->map[field->yi][field->xi - 1] != '0' \
-		&& check_first_pos(field, field->yi, field->xi - 1) == false)
-		{
-			printf("%d,%d\n", field->xi, field->yi);
-			write(1,"a\n",2);
+	if (field->map[parse->yi][parse->xi - 1] != '1' \
+		&& field->map[parse->yi][parse->xi - 1] != '0' \
+		&& check_first_pos(field, parse->yi, parse->xi - 1) == false)
 		return (false);
-		}
-	if (field->map[field->yi + 1][field->xi] != '1' \
-		&& field->map[field->yi + 1][field->xi] != '0'\
-		&& check_first_pos(field, field->yi + 1, field->xi) == false)
+	if (field->map[parse->yi + 1][parse->xi] != '1' \
+		&& field->map[parse->yi + 1][parse->xi] != '0'\
+		&& check_first_pos(field, parse->yi + 1, parse->xi) == false)
 		return (false);
-	if (field->map[field->yi][field->xi + 1] != '1' \
-		&& field->map[field->yi][field->xi + 1] != '0' \
-		&& check_first_pos(field, field->yi, field->xi + 1) == false)
+	if (field->map[parse->yi][parse->xi + 1] != '1' \
+		&& field->map[parse->yi][parse->xi + 1] != '0' \
+		&& check_first_pos(field, parse->yi, parse->xi + 1) == false)
 		return (false);
-	if (field->map[field->yi - 1][field->xi] != '1' \
-			&& field->map[field->yi - 1][field->xi] != '0' \
-			&& check_first_pos(field, field->yi - 1, field->xi) == false)
+	if (field->map[parse->yi - 1][parse->xi] != '1' \
+			&& field->map[parse->yi - 1][parse->xi] != '0' \
+			&& check_first_pos(field, parse->yi - 1, parse->xi) == false)
 			return (false);
 	return (true);
 }
 
-void	can_pass(t_field *field, t_vec *stack, bool visited[MAX_SIZE][MAX_SIZE])
+void	can_pass(t_field *field, t_parse *parse, t_vec *stack, bool visited[MAX_SIZE][MAX_SIZE])
 {
 	t_vec	next;
 
-	next.x = field->xi;
-	next.y = field->yi;
-	if (visited[field->yi][field->xi] == false
-		&& check_space(field))
+	next.x = parse->xi;
+	next.y = parse->yi;
+	if (visited[parse->yi][parse->xi] == false
+		&& check_space(field, parse))
 	{
-		if (field->yi == 0 || field->yi == field->height - 1\
-			|| field->xi == 0 || field->xi == (int)ft_strlen(field->map[field->yi -1]) - 1)
+		if (parse->yi == 0 || parse->yi == parse->height - 1\
+			|| parse->xi == 0 || parse->xi == (int)ft_strlen(field->map[parse->yi -1]) - 1)
 				exit(0);
-		if (check_wall(field) == false)
+		if (check_wall(field, parse) == false)
 			exit(0);
-		field->top++;
-		visited[field->yi][field->xi] = true;
-		stack[field->top] = next;
+		parse->top++;
+		visited[parse->yi][parse->xi] = true;
+		stack[parse->top] = next;
 	}
 	return ;
 }
 
-bool	pass_find(t_field *field, t_vec *stack, bool visited[MAX_SIZE][MAX_SIZE])
+bool	pass_find(t_field *field, t_parse *parse, t_vec *stack, bool visited[MAX_SIZE][MAX_SIZE])
 {
 	int			i;
 	static int	dx[] = {-1, 0, 1, 0};
 	static int	dy[] = {0, 1, 0, -1};
 	t_vec		cur;
 
-	while (field->top >= 0)
+	while (parse->top >= 0)
 	{
 		i = 0;
-		cur = stack[field->top];
-		field->top--;
+		cur = stack[parse->top];
+		parse->top--;
 		while (i < 4)
 		{
-			field->xi = cur.x + dx[i];
-			field->yi = cur.y + dy[i];
-			can_pass(field, stack, visited);
+			parse->xi = cur.x + dx[i];
+			parse->yi = cur.y + dy[i];
+			can_pass(field, parse, stack, visited);
 			i++;
 		}
 	}
 	return (true);
 }
 
-void	check_map(t_field *field)
+void	check_map(t_field *field, t_parse *parse)
 {
 	t_vec	stack[MAX_SIZE];
 	t_vec	node;
@@ -102,22 +90,21 @@ void	check_map(t_field *field)
 	int		index;
 
 	index = 0;
-	field->top = 0;
+	parse->top = 0;
 	while (visited[index] == NULL)
 	{
 		ft_memset(visited, false, sizeof(visited));
 		index++;
 	}
-	node.x = field->pos_x;
-	node.y = field->pos_y;
-	// printf("rrr%d,%d\n",field->pos_y,field->pos_x);
-	stack[field->top] = node;
-	visited[field->pos_y][field->pos_x] = true;
-	if (!pass_find(field, stack, visited))
+	node.x = parse->pos_x;
+	node.y = parse->pos_y;
+	stack[parse->top] = node;
+	visited[parse->pos_y][parse->pos_x] = true;
+	if (!pass_find(field, parse, stack, visited))
 		exit(0);
 }
 
-void	check_valid_map(t_field *field)
+void	check_valid_map(t_field *field, t_parse *parse)
 {
 	int	height;
 	int width;
@@ -136,8 +123,8 @@ void	check_valid_map(t_field *field)
 				|| field->map[height][width] == 'E')
 			{
 				pos_count++;
-				field->pos_x = width;
-				field->pos_y = height;
+				parse->pos_x = width;
+				parse->pos_y = height;
 			}
 			else if (field->map[height][width] != '1' \
 				&& field->map[height][width] != '0' \
@@ -153,5 +140,5 @@ void	check_valid_map(t_field *field)
 	}
 	if (pos_count != 1)
 		exit(0);
-	check_map(field);
+	check_map(field, parse);
 }

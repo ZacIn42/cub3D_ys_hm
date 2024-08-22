@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:25:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/14 10:03:32 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/22 14:37:05 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define WIN_HEIGHT (2048)
 # define WIN_WIDTH (2048)
 # define MAX_SIZE (1024)
+# define SIZE_MAX (1024)
 // # define BLOCK_HEIGHT (1024)
 // # define BLOCK_WIDTH (1024)
 
@@ -66,13 +67,7 @@ typedef struct s_img {
 	int		endian;
 }	t_img;
 
-typedef struct s_field {
-	char			**map;
-	t_user			user;
-	char			texture_paths[4][PATH_MAX];
-	t_img			textures[4];
-	unsigned int	c_color;
-	unsigned int	f_color;
+typedef struct s_parse {
 	int				pos_x;
 	int				pos_y;
 	int				xi;
@@ -80,7 +75,17 @@ typedef struct s_field {
 	int				top;
 	int				height;
 	int				width;
+} t_parse;
+
+typedef struct s_field {
+	char			**map;
+	t_user			user;
+	char			texture_paths[4][PATH_MAX];
+	t_img			textures[4];
+	unsigned int	c_color;
+	unsigned int	f_color;
 }	t_field;
+
 
 typedef struct s_cub {
 	void	*mlx;
@@ -122,7 +127,7 @@ int		look_around(int key_code, t_user *user);
 int		close_window_esc(int key_code, t_cub *mlx);
 void	check_filename(int ac, char *av);
 void	read_map(char *map, t_field *field);
-void	check_map(t_field *field);
+void	check_map(t_field *field, t_parse *parse);
 char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
 void	ft_bzero(void *s, size_t n);
@@ -131,13 +136,9 @@ char	*ft_strdup(const char *src);
 size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcpy(char *dest, const char *src, size_t n);
-char	*ft_temp_sj(t_field *field, char *line);
-char	*ft_strjoin_new(char *s1, char *s2);
-char	*ft_strdup_new(char *src);
 void	*ft_memset(void *b, int c, size_t len);
-void	check_valid_map(t_field *field);
+void	check_valid_map(t_field *field, t_parse *parse);
 int		count_file_height(int fd);
 bool	check_walk(int key_code, t_user *user, t_field *field);
-
 
 #endif
