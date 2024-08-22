@@ -6,13 +6,13 @@
 #    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/31 19:23:35 by hmiyazak          #+#    #+#              #
-#    Updated: 2024/08/22 14:18:57 by yususato         ###   ########.fr        #
+#    Updated: 2024/08/22 17:26:07 by yususato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I.
+CFLAGS = -I. 
 MLXOBJFLAGS = -I/usr/include -Imlx_linux -O3
 MLXFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 DRAW_DIR = ./draw_scene
@@ -33,13 +33,16 @@ SRCS =	main.c \
 		parse_file/parse_arg.c \
 		parse_file/get_next_line.c \
 		parse_file/parse_check_height.c \
+		parse_file/parse_texture.c \
+		parse_file/parse_floor_ceiling.c \
+		parse_file/parse_texture_direction.c
 
 OBJS = $(SRCS:.c=.o)
 TEST_SRCS = $(filter-out main.c, $(SRCS))
 TEST_SRCS += test.c
 TEST_OBJS = $(TEST_SRCS:.c=.o)
-# LIBDIR = ./libft
-# LIBFT = $(LIBDIR)/libft.a
+LIBDIR = ./libft
+LIBFT = $(LIBDIR)/libft.a
 
 %.o: %.c
 	$(CC) $(CFLAGS)	$(MLXOBJFLAGS) -c $< -o $@
@@ -48,20 +51,20 @@ TEST_OBJS = $(TEST_SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) ./mlx_linux/libmlx_Linux.a -o $@
+	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(LIBFT) ./mlx_linux/libmlx_Linux.a -o $@
 
 test: $(TEST_OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(MLXFLAGS) $(TEST_OBJS) ./mlx_linux/libmlx_Linux.a -o test
 
-# $(LIBFT):
-# 	$(MAKE) -C $(LIBDIR)
+$(LIBFT):
+	$(MAKE) -C $(LIBDIR)
 
 clean:
-# $(MAKE) clean -C $(LIBDIR)
+	$(MAKE) clean -C $(LIBDIR)
 	$(RM) $(OBJS) $(TEST_OBJS)
 
 fclean: clean
-# $(MAKE) fclean -C $(LIBDIR)
+	$(MAKE) fclean -C $(LIBDIR)
 	$(RM) $(NAME)
 	$(RM) test
 

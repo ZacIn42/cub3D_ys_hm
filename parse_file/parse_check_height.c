@@ -26,6 +26,7 @@ void	read_file_height(int fd, int *count)
 	while (byte_size > 0)
 	{
 		byte_size = read(fd, buf, BUFFER_SIZE);
+		printf("%d\n", byte_size);
 		if (byte_size == -1)
 		{
 			free(buf);

@@ -1,21 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_map.c                                        :+:      :+:    :+:   */
+/*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/22 14:02:48 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/22 21:11:06 by yususato         ###   ########.fr       */
+/*   Created: 2024/08/22 15:32:52 by yususato          #+#    #+#             */
+/*   Updated: 2024/08/22 22:36:27 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static void	insert_map_tmp(t_field *field, char *new_line, int *index)
+static void	check_height(t_parse *parse)
 {
-	field->map[*index] = ft_strdup(new_line);
-	(*index)++;
+	if (parse->height < 3)
+		exit(0);
+	return ;
+}
+
+void	check_valid_texture(char *line)
+{
+	if (line[0] == 'N')
+		check_texture_north(line);
+	else if (line[0] == 'S')
+		check_texture_sorth(line);
+	else if (line[0] == 'W')
+		check_texture_west(line);
+	else if (line[0] == 'E')
+		check_texture_east(line);
+	else if (line[0] == 'F')
+		check_texture_floor(line);
+	else if (line[0] == 'C')
+		check_texture_ceiling(line);
+	else if (line[0] == '\n')
+        return ;
 	return ;
 }
 
@@ -27,7 +46,7 @@ static char	*ft_strdup_new(char *src)
 	i = 0;
 	if (src == NULL)
 		return (NULL);
-	new = (char *)malloc(sizeof(char) * ft_strlen(src));
+	new = (char *)malloc(sizeof(char) * ft_strlen(src + 1));
 	if (new == NULL)
 		return (NULL);
 	while (src[i] != '\0')
@@ -42,40 +61,43 @@ static char	*ft_strdup_new(char *src)
 	return (new);
 }
 
-void	read_map(char *map, t_field *field, t_parse *parse)
+void	parse_texture(char *map, t_parse *parse)
 {
 	int		count;
-	int		index;
 	int		fd;
 	char	*line;
 	char	*new_line;
 
-	index = 0;
 	count = 0;
 	fd = open(map, O_RDONLY);
-	field->map = (char **)ft_calloc(sizeof(char *), parse->height + 1);
-	while (count < parse->texture_height && new_line)
-	{
-		line = get_next_line(fd);
-		if (!new_line)
-			break ;
-		free(line);
-		count++;
-	}
 	line = get_next_line(fd);
 	new_line = ft_strdup_new(line);
 	if (new_line == NULL)
 		exit(0);
-	insert_map_tmp(field, new_line, &index);
 	free(line);
+	parse->texture_height = 0;
 	while (new_line)
 	{
+		printf("%s\n",new_line);
+		parse->texture_height++;
+		if (*new_line == '\0')
+		{
+			free(new_line);
+			new_line = get_next_line(fd);
+			continue ;
+		}
+		count++;
+		check_valid_texture(new_line);
+		free(new_line);
+		if (count == 6)
+			break ;
 		new_line = get_next_line(fd);
 		if (!new_line)
 			break ;
-		insert_map_tmp(field, new_line, &index);
-		free(new_line);
 	}
+	parse->height = 1;
+	parse->height += count_file_height(fd);
+	printf("%d\n",parse->height);
+	check_height(parse);
 	close(fd);
-	check_valid_map(field, parse);
 }

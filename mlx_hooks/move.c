@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 08:55:23 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/22 14:38:06 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:25:50 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	move(int key_code, t_user *user, t_field *field)
 {
 	if (user == NULL)
 		return (1);
-	if (check_walk(key_code, user, field) == false)
-		return (1);
+	// if (check_walk(key_code, user, field) == false)
+	// 	return (1);
 	if (key_code == MOVE_FORWARD_KEY)
 		return (move_forward(user));
 	else if (key_code == MOVE_RIGHT_KEY)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:28:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/14 10:09:08 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/22 21:08:47 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ int	main(int ac, char **av)
 
 static int	parse_file(t_field *field, int ac, char **av)
 {
+	t_parse	parse;
+
 	check_filename(ac, av[1]);
-	read_map(av[1], field);
 	vec_init(&field->user.pos, 1.5, 1.5);
 	field->user.dir = NORTH;
 	strcpy(field->texture_paths[NORTH], "./images/tile.xpm");
@@ -46,6 +47,8 @@ static int	parse_file(t_field *field, int ac, char **av)
 	strcpy(field->texture_paths[WEST], "./images/tile.xpm");
 	field->c_color = 0xFF0000;
 	field->f_color = 0x00FF00;
+	parse_texture(av[1], &parse);
+	read_map(av[1], field, &parse);
 	return (0);
 }
 

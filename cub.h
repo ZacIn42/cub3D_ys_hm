@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:25:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/22 14:37:05 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/22 20:59:59 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <errno.h>
 # include <limits.h>
 # include <string.h>
+# include "./libft/libft.h"
 
 # define WIN_HEIGHT (2048)
 # define WIN_WIDTH (2048)
@@ -68,13 +69,15 @@ typedef struct s_img {
 }	t_img;
 
 typedef struct s_parse {
-	int				pos_x;
-	int				pos_y;
-	int				xi;
-	int				yi;
-	int				top;
-	int				height;
-	int				width;
+	int	pos_x;
+	int	pos_y;
+	int	xi;
+	int	yi;
+	int	top;
+	int	height;
+	int	width;
+	int	texture_flag;
+	int	texture_height;
 } t_parse;
 
 typedef struct s_field {
@@ -126,7 +129,7 @@ bool	is_look_key(int key_code);
 int		look_around(int key_code, t_user *user);
 int		close_window_esc(int key_code, t_cub *mlx);
 void	check_filename(int ac, char *av);
-void	read_map(char *map, t_field *field);
+void	read_map(char *map, t_field *field, t_parse *parse);
 void	check_map(t_field *field, t_parse *parse);
 char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
@@ -140,5 +143,14 @@ void	*ft_memset(void *b, int c, size_t len);
 void	check_valid_map(t_field *field, t_parse *parse);
 int		count_file_height(int fd);
 bool	check_walk(int key_code, t_user *user, t_field *field);
+void	parse_texture(char *map, t_parse *parse);
+void    check_texture_north(char *line);
+void    check_texture_sorth(char *line);
+void    check_texture_west(char *line);
+void    check_texture_east(char *line);
+void	check_texture_floor(char *line);
+void	check_texture_ceiling(char *line);
+void	check_valid_texture(char *line);
+
 
 #endif
