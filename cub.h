@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:25:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/22 08:41:24 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/23 08:00:50 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 
 # define WIN_HEIGHT (768)
 # define WIN_WIDTH (768)
+# define FUDGE_FACTOR (0.001f)
 
 typedef struct s_vec {
 	double	x;

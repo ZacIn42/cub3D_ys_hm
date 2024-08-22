@@ -6,13 +6,11 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 15:31:19 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/14 15:29:41 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/23 08:08:42 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-
-#define PRECISION (0.01f)
 
 static t_img	*set_texture(t_field *field, t_vec *spot);
 static int		calc_canvas_index(t_img *canvas, int x, int h, int iter);
@@ -28,7 +26,7 @@ int	draw_vertical(t_cub *cub, t_user *user, t_vec *spot, int x)
 
 	canvas = &cub->img;
 	texture = set_texture(cub->field, spot);
-	h = (double)WIN_HEIGHT / calc_perp_dist(user, spot);
+	h = (double)WIN_HEIGHT / 5 / calc_perp_dist(user, spot);
 	iter = 0;
 	while (iter < h && iter - h / 2 < WIN_HEIGHT / 2)
 	{
@@ -76,7 +74,7 @@ static t_img	*set_texture(t_field *field, t_vec *spot)
 	t_vec	*pos;
 
 	pos = &field->user.pos;
-	if (spot->x - (double)(int)spot->x < PRECISION)
+	if (spot->x == (int)spot->x)
 	{
 		if (pos->x <= spot->x)
 			return (&field->textures[WEST]);
