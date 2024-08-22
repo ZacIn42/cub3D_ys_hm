@@ -6,38 +6,50 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/31 19:23:35 by hmiyazak          #+#    #+#              #
-#    Updated: 2024/07/31 19:23:40 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/08/23 08:51:48 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
-INCLUDES_DIR = ./includes
-CFLAGS = -Wall -Wextra -Werror -I$(INCLUDES_DIR)
-MLXFLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
-SRCS =	main.c
-OBJS = $(SRCS:.c=.o)
-LIBDIR = ./libft
+CFLAGS = -Wall -Wextra -Werror -I.
+MLXOBJFLAGS = -I/usr/include -Imlx_linux -O3
+MLXFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+SRCDIR = src
+OBJDIR = objects
+BINDIR = bin
+LIBDIR = libft
 LIBFT = $(LIBDIR)/libft.a
+TARGET = $(BINDIR)/$(NAME)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+SRCFILES = $(wildcard $(SRCDIR)/*.c)
 
-all: $(NAME)
+OBJFILES = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o)
 
-$(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(LIBFT) -o $@
+$(OBJDIR):
+	mkdir -p $@
+
+$(BINDIR):
+	mkdir -p $@
 
 $(LIBFT):
 	$(MAKE) -C $(LIBDIR)
 
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(OBJDIR)
+	$(CC) $(CFLAGS) $(MLXFLAGS) -c $< -o $@
+
+all: $(TARGET)
+
+$(TARGET): $(OBJFILES) $(BINDIR)
+	$(CC) $(CFLAGS) $(OBJFILES) ./mlx_linux/libmlx_Linux.a -o $@
+
 clean:
 	$(MAKE) clean -C $(LIBDIR)
-	$(RM) $(OBJS)
+	$(RM) $(OBJDIR)
 
 fclean: clean
 	$(MAKE) fclean -C $(LIBDIR)
-	$(RM) $(NAME)
+	$(RM) $(BINDIR)
 
 re: fclean all
 
