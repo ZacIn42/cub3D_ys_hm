@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:44:42 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/14 15:53:07 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/23 09:36:36 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ int	draw_wall(t_cub *cub, t_field *field)
 	while (x < WIN_WIDTH)
 	{
 		spot = cast_ray_alloc(&field->user.pos, theta, field->map);
-		draw_vertical(cub, &field->user, spot, x);
+		if (spot == NULL)
+			return (1);
+		if (draw_vertical(cub, &field->user, spot, x) != 0)
+			return (free(spot), 1);
 		free(spot);
 		theta += theta_step;
 		x += 1;

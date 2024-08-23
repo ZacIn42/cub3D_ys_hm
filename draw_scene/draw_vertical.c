@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 15:31:19 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/23 08:08:42 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/23 10:28:02 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static int	calc_texture_index(t_img *texture, t_vec *spot, int h, int iter)
 	y = texture->height * iter / h;
 	return (y * texture->line_len + x * (texture->b_p_pixel / 8));
 }
-
 
 static t_img	*set_texture(t_field *field, t_vec *spot)
 {
