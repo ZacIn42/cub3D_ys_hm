@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:25:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 17:03:44 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:35:27 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 # define WIN_HEIGHT (2048)
 # define WIN_WIDTH (2048)
 # define MAX_SIZE (1024)
-# define SIZE_MAX (1024)
 // # define BLOCK_HEIGHT (1024)
 // # define BLOCK_WIDTH (1024)
 
