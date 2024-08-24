@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 19:17:12 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/24 19:19:44 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB_H
 
 # include "./mlx_linux/mlx.h"
+# include "libft.h"
 # include <math.h>
 # include <unistd.h>
 # include <stdio.h>
