@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/31 19:23:35 by hmiyazak          #+#    #+#              #
-#    Updated: 2024/08/24 21:42:51 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/08/24 23:19:34 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,30 +25,27 @@ IFLAGS = -I$(SRCDIR) -I$(LIBDIR) -I$(MLXDIR)
 
 RM = rm -rf
 
-SRCFILES = $(shell find $(SRCDIR) -name '*.c')
-
-OBJFILES = $(patsubst %.c,$(OBJDIR)/%.o,$(notdir $(SRCFILES)))
+SRCS = $(shell find $(SRCDIR) -type f -name '*.c')
+OBJS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
 
 all: $(NAME)
 
-$(OBJDIR):
-	mkdir -p $@
-
 $(LIBFT):
-	$(MAKE) -C $(LIBDIR)
+	@$(MAKE) -C $(LIBDIR)
 
-%.o: %.c $(OBJDIR)
-	$(CC) $(CFLAGS) $(IFLAGS) $(MLXOBJFLAGS) -c $(SRCDIR)/$< -o $(OBJDIR)/%.c
+$(OBJDIR)/%o: $(SRCDIR)/%.c
+	mkdir -p $(@D)
+	$(CC) $(CFLAGS) $(IFLAGS) $(MLXOBJFLAGS) -c $< -o $@
 
-$(NAME): $(OBJFILES)
-	$(CC) $(CFLAGS) $(IFLAGS) $(MLXFLAGS) $(OBJFILES) $(MLXLIB) -o $@
+$(NAME): $(OBJS) | $(LIBFT)
+	$(CC) $(CFLAGS) $(IFLAGS) $(MLXFLAGS) $(OBJS) $(MLXLIB) $(LIBFT) -o $@
 
 clean:
-	$(MAKE) clean -C $(LIBDIR)
+	@$(MAKE) clean -C $(LIBDIR)
 	$(RM) $(OBJDIR)
 
 fclean: clean
-	$(MAKE) fclean -C $(LIBDIR)
+	@$(MAKE) fclean -C $(LIBDIR)
 	$(RM) $(NAME)
 
 re: fclean all
