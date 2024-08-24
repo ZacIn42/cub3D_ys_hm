@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:02:48 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/24 21:51:45 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/24 21:57:00 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	insert_map_tmp(t_field *field, char *line, int *index)
 	return ;
 }
 
-void	skip_texture(t_parse *parse, char *line, int *fd)
+static void	skip_texture(t_parse *parse, char *line, int *fd)
 {
 	line = get_next_line(*fd);
 	if (!line)

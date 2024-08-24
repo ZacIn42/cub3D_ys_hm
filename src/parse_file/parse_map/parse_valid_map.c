@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:20:05 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/24 21:34:47 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/24 21:58:43 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	check_map(t_field *field, t_parse *parse)
 		exit(0);
 }
 
-void	is_valid_map_content(t_field *field, int *pos_count)
+static void	is_valid_map_content(t_field *field, int *pos_count)
 {
 	int	height;
 	int	width;
