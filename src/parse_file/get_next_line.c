@@ -6,13 +6,13 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:29:02 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/23 11:12:57 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/24 20:07:03 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-char	*line_next(char *buffer, char *line)
+static char	*line_next(char *buffer, char *line)
 {
 	size_t	i;
 	size_t	j;
@@ -40,7 +40,7 @@ char	*line_next(char *buffer, char *line)
 	return (tmp);
 }
 
-char	*output(char *buffer)
+static char	*output(char *buffer)
 {
 	char	*line;
 	size_t	i;
@@ -67,7 +67,7 @@ char	*output(char *buffer)
 	return (line);
 }
 
-char	*unit(char *buffer, char *buf)
+static char	*unit(char *buffer, char *buf)
 {
 	char	*temp;
 
@@ -76,7 +76,7 @@ char	*unit(char *buffer, char *buf)
 	return (temp);
 }
 
-char	*read_file(int fd, char *buffer, int *flag)
+static char	*read_file(int fd, char *buffer, int *flag)
 {
 	int		byte_size;
 	char	*buf;
