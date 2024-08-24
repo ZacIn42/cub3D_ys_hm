@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:20:05 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/24 21:58:43 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/24 22:02:09 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static void	is_valid_map_content(t_field *field, int *pos_count)
 			else if (field->map[height][width] != '1' \
 				&& field->map[height][width] != '0' \
 				&& field->map[height][width] != ' ')
-				put_error_printf("Error: Invalid map\n");
+				exit(perror_return_one("Error: Invalid map\n"));
 			width++;
 		}
 		width = 0;
@@ -115,6 +115,6 @@ void	check_valid_map(t_field *field, t_parse *parse)
 	pos_count = 0;
 	is_valid_map_content(field, &pos_count)
 	if (pos_count != 1)
-		put_error_printf("Error: many player\n");
+		exit(perror_return_one("Error: many player\n"));
 	check_map(field, parse);
 }
