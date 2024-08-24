@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/31 19:23:35 by hmiyazak          #+#    #+#              #
-#    Updated: 2024/08/23 08:51:48 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/08/24 17:57:15 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,11 @@ BINDIR = bin
 LIBDIR = libft
 LIBFT = $(LIBDIR)/libft.a
 TARGET = $(BINDIR)/$(NAME)
+RM = rm -rf
 
 SRCFILES = $(wildcard $(SRCDIR)/*.c)
 
-OBJFILES = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o)
+OBJFILES = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCFILES))
 
 $(OBJDIR):
 	mkdir -p $@

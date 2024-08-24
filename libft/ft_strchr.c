@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/23 09:05:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 17:58:49 by hmiyazak         ###   ########.fr       */
+/*   Created: 2023/05/19 12:07:20 by yususato          #+#    #+#             */
+/*   Updated: 2023/12/10 16:20:06 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "libft.h"
+#include <stdio.h>
 
-int	main(void)
+char	*ft_strchr(const char *s, int c)
 {
-	return (0);
+	while (*s)
+	{
+		if (*s == (unsigned char)c)
+			return ((char *)s);
+		s++;
+	}
+	if (c == '\0')
+		return ((char *)s);
+	return (NULL);
 }
