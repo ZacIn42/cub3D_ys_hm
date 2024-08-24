@@ -6,7 +6,7 @@
 #    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/31 19:23:35 by hmiyazak          #+#    #+#              #
-#    Updated: 2024/08/22 17:26:07 by yususato         ###   ########.fr        #
+#    Updated: 2024/08/24 17:46:35 by yususato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,6 @@ SRCS =	main.c \
 		parse_file/parse_valid_map.c \
 		parse_file/parse_arg.c \
 		parse_file/get_next_line.c \
-		parse_file/parse_check_height.c \
 		parse_file/parse_texture.c \
 		parse_file/parse_floor_ceiling.c \
 		parse_file/parse_texture_direction.c
