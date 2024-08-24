@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/23 09:04:47 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/24 19:19:44 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB_H
 
 # include "./mlx_linux/mlx.h"
+# include "libft.h"
 # include <math.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -92,5 +93,25 @@ enum {
 	MOVE_LEFT_KEY = 97,
 	ESC_KEY = 65307,
 };
+
+//functions for parsing the file
+void	read_map(char *map, t_field *field, t_parse *parse);
+char	*get_next_line(int fd);
+
+//functions for draw_scene
+int		draw_scene(t_cub *cub, t_field *field);
+t_vec	*cast_ray(const t_vec *pos, double theta, char **map);
+int		draw_vertical(t_cub *cub, t_user *user, t_vec *spot, int x);
+int		refresh_image(t_img *canvas, unsigned int c, unsigned int f);
+
+//functions for hooks
+int		set_mlx_hooks(t_cub *cub);
+int		close_window_cross(t_cub *cub);
+int		close_window_esc(int key_code, t_cub *cub);
+int		look_around(int key_code, t_user *user);
+int		move(int key_code, t_user *user);
+
+//functions in utils
+void	put_error_exit(char *error_message);
 
 #endif
