@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 19:19:44 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/24 20:41:51 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int		look_around(int key_code, t_user *user);
 int		move(int key_code, t_user *user);
 
 //functions in utils
-void	put_error_exit(char *error_message);
+int		perror_return_one(char *error_message);
+void	free_str_array(char **str_array);
 
 #endif
