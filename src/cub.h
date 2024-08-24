@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 23:34:47 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/24 23:39:47 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <errno.h>
 # include <limits.h>
 # include <string.h>
+# include <stdint.h>
 
 # define WIN_HEIGHT (768)
 # define WIN_WIDTH (768)
@@ -139,5 +140,23 @@ void	vec_sub(t_vec *ans, t_vec *lhs, t_vec *rhs);
 //functions in utils
 int		perror_return_one(char *error_message);
 void	free_str_array(char **str_array);
+
+//functions in parse_file
+void	parse_file(t_field *field, t_parse *parse, char *filename);
+void	read_map(char *map, t_field *field, t_parse *parse);
+void	check_valid_map(t_field *field, t_parse *parse);
+void	parse_texture(char *map, t_parse *parse);
+void	check_texture_north(char *line, t_parse *parse);
+void	check_texture_sorth(char *line, t_parse *parse);
+void	check_texture_west(char *line, t_parse *parse);
+void	check_texture_east(char *line, t_parse *parse);
+void	check_texture_ceiling(char *line, t_parse *parse);
+void	check_texture_floor(char *line, t_parse *parse);
+
+//functions in utils of parse_file
+bool	check_space(t_field *field, t_parse *parse);
+bool	check_first_pos(t_field *field, int yi, int xi);
+bool	check_wall(t_field *field, t_parse *parse);
+
 
 #endif

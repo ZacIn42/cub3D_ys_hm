@@ -6,11 +6,24 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:28:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 20:50:59 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/24 23:37:16 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
+
+void	check_filename(int argument_count, char *filename)
+{
+	char	*extension;
+
+	if (argument_count != 2)
+		exit(0);
+	extension = strrchr(filename, '.');
+	if (extension == NULL)
+		exit(0);
+	if (strncmp(extension, ".cub\0", 5) != 0)
+		exit(0);
+}
 
 static int	init_cub(t_cub *cub, t_field *field);
 static int	parse_file(t_field *field);

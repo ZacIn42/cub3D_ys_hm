@@ -1,44 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_valid_map.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/24 20:20:05 by yususato          #+#    #+#             */
+/*   Updated: 2024/08/24 22:30:57 by yususato         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
-bool	check_space(t_field *field, t_parse *parse)
-{
-	if (field->map[parse->yi][parse->xi] == '0')
-		return (true);
-	return (false);
-}
-
-bool	check_first_pos(t_field *field, int yi, int xi)
-{
-	if (field->map[yi][xi] == 'N' \
-		|| field->map[yi][xi] == 'S' \
-		|| field->map[yi][xi] == 'W' \
-		|| field->map[yi][xi] == 'E')
-		return (true);
-	return (false);
-}
-
-bool	check_wall(t_field *field, t_parse *parse)
-{
-	if (field->map[parse->yi][parse->xi - 1] != '1' \
-		&& field->map[parse->yi][parse->xi - 1] != '0' \
-		&& check_first_pos(field, parse->yi, parse->xi - 1) == false)
-		return (false);
-	if (field->map[parse->yi + 1][parse->xi] != '1' \
-		&& field->map[parse->yi + 1][parse->xi] != '0'\
-		&& check_first_pos(field, parse->yi + 1, parse->xi) == false)
-		return (false);
-	if (field->map[parse->yi][parse->xi + 1] != '1' \
-		&& field->map[parse->yi][parse->xi + 1] != '0' \
-		&& check_first_pos(field, parse->yi, parse->xi + 1) == false)
-		return (false);
-	if (field->map[parse->yi - 1][parse->xi] != '1' \
-			&& field->map[parse->yi - 1][parse->xi] != '0' \
-			&& check_first_pos(field, parse->yi - 1, parse->xi) == false)
-			return (false);
-	return (true);
-}
-
-void	can_pass(t_field *field, t_parse *parse, t_vec *stack, bool visited[MAX_SIZE][MAX_SIZE])
+void	can_pass(t_field *field, t_parse *parse \
+				, t_vec *stack, bool visited[MAX_SIZE][MAX_SIZE])
 {
 	t_vec	next;
 
@@ -48,10 +23,11 @@ void	can_pass(t_field *field, t_parse *parse, t_vec *stack, bool visited[MAX_SIZ
 		&& check_space(field, parse))
 	{
 		if (parse->yi == 0 || parse->yi == parse->height - 1\
-			|| parse->xi == 0 || parse->xi == (int)ft_strlen(field->map[parse->yi -1]) - 1)
+			|| parse->xi == 0 \
+			|| parse->xi == (int)ft_strlen(field->map[parse->yi -1]) - 1)
 				exit(0);
 		if (check_wall(field, parse) == false)
-			exit(0);
+			exit(perror_return_one("Error: Map is not surrounded by walls\n"));
 		parse->top++;
 		visited[parse->yi][parse->xi] = true;
 		stack[parse->top] = next;
@@ -59,7 +35,8 @@ void	can_pass(t_field *field, t_parse *parse, t_vec *stack, bool visited[MAX_SIZ
 	return ;
 }
 
-bool	pass_find(t_field *field, t_parse *parse, t_vec *stack, bool visited[MAX_SIZE][MAX_SIZE])
+static bool	pass_find(t_field *field, t_parse *parse \
+						, t_vec *stack, bool visited[MAX_SIZE][MAX_SIZE])
 {
 	int			i;
 	static int	dx[] = {-1, 0, 1, 0};
@@ -82,7 +59,7 @@ bool	pass_find(t_field *field, t_parse *parse, t_vec *stack, bool visited[MAX_SI
 	return (true);
 }
 
-void	check_map(t_field *field, t_parse *parse)
+static void	check_map(t_field *field, t_parse *parse)
 {
 	t_vec	stack[MAX_SIZE];
 	t_vec	node;
@@ -101,44 +78,44 @@ void	check_map(t_field *field, t_parse *parse)
 	stack[parse->top] = node;
 	visited[parse->pos_y][parse->pos_x] = true;
 	if (!pass_find(field, parse, stack, visited))
-		exit(0);
+		exit(perror_return_one("Error: Map is not surrounded by walls\n"));
 }
 
-void	check_valid_map(t_field *field, t_parse *parse)
+static void	is_valid_map_content(t_field *field, int *pos_count)
 {
 	int	height;
-	int width;
-	int pos_count;
+	int	width;
 
 	height = 0;
 	width = 0;
-	pos_count = 0;
 	while (field->map[height])
 	{
 		while (field->map[height][width] && field->map[height][width] != '\0')
 		{
-			if (field->map[height][width] == 'N' \
-				|| field->map[height][width] == 'S' \
-				|| field->map[height][width] == 'W' \
-				|| field->map[height][width] == 'E')
+			if (check_first_pos(field, height, width))
 			{
-				pos_count++;
+				*pos_count++;
 				parse->pos_x = width;
 				parse->pos_y = height;
 			}
 			else if (field->map[height][width] != '1' \
 				&& field->map[height][width] != '0' \
 				&& field->map[height][width] != ' ')
-			{
-				printf("Error map\n");
-				exit(0);
-			}
+				exit(perror_return_one("Error: Invalid map\n"));
 			width++;
 		}
 		width = 0;
 		height++;
 	}
+}
+
+void	check_valid_map(t_field *field, t_parse *parse)
+{
+	int	pos_count;
+
+	pos_count = 0;
+	is_valid_map_content(field, &pos_count);
 	if (pos_count != 1)
-		exit(0);
-	check_map(field, parse);
+		exit(perror_return_one("Error: many player\n"));
+	return ;
 }
