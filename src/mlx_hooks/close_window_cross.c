@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 08:13:56 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/22 08:41:15 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/24 19:25:38 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,3 @@ int	close_window_cross(t_cub *cub)
 	mlx_destroy_window(cub->mlx, cub->window);
 	exit(0);
 }
-
