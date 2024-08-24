@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 09:09:12 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 19:16:08 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/24 19:32:19 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,17 @@ static bool	is_move_key(int key_code)
 
 static int	key_hook(int key_code, t_cub *cub)
 {
+	t_field	*field;
+	t_user	*user;
+
+	if (cub == NULL)
+		return (1);
+	field = cub->field;
+	user = &field->user;
 	if (is_look_key(key_code))
-		look_around(key_code, &cub->field->user);
-	else if (is_move_key(key_code))
-		move(key_code, &cub->field->user);
+		look_around(key_code, user);
+	else if (is_move_key(key_code) && check_walk(key_code, user, field))
+		move(key_code, user);
 	else if (key_code == ESC_KEY)
 		return (close_window_esc(key_code, cub));
 	else
