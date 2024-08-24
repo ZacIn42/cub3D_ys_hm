@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:32:52 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/22 22:36:27 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:04:53 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@ static void	check_height(t_parse *parse)
 	return ;
 }
 
-void	check_valid_texture(char *line)
+void	check_valid_texture(char *line, t_parse *parse)
 {
 	if (line[0] == 'N')
-		check_texture_north(line);
+		check_texture_north(line, parse);
 	else if (line[0] == 'S')
-		check_texture_sorth(line);
+		check_texture_sorth(line, parse);
 	else if (line[0] == 'W')
-		check_texture_west(line);
+		check_texture_west(line, parse);
 	else if (line[0] == 'E')
-		check_texture_east(line);
+		check_texture_east(line, parse);
 	else if (line[0] == 'F')
-		check_texture_floor(line);
+		check_texture_floor(line, parse);
 	else if (line[0] == 'C')
-		check_texture_ceiling(line);
+		check_texture_ceiling(line, parse);
 	else if (line[0] == '\n')
         return ;
 	return ;
@@ -61,6 +61,15 @@ static char	*ft_strdup_new(char *src)
 	return (new);
 }
 
+void	check_texture_flag(t_parse *parse)
+{
+	if (parse->north_flag == true && parse->sorth_flag == true \
+		&& parse->west_flag == true && parse->east_flag == true \
+		&& parse->ceiling_flag == true && parse->floor_flag == true)
+		return ;
+	exit(0);
+}
+
 void	parse_texture(char *map, t_parse *parse)
 {
 	int		count;
@@ -70,15 +79,12 @@ void	parse_texture(char *map, t_parse *parse)
 
 	count = 0;
 	fd = open(map, O_RDONLY);
-	line = get_next_line(fd);
-	new_line = ft_strdup_new(line);
+	new_line = get_next_line(fd);
 	if (new_line == NULL)
 		exit(0);
-	free(line);
 	parse->texture_height = 0;
 	while (new_line)
 	{
-		printf("%s\n",new_line);
 		parse->texture_height++;
 		if (*new_line == '\0')
 		{
@@ -87,7 +93,7 @@ void	parse_texture(char *map, t_parse *parse)
 			continue ;
 		}
 		count++;
-		check_valid_texture(new_line);
+		check_valid_texture(new_line, parse);
 		free(new_line);
 		if (count == 6)
 			break ;
@@ -95,9 +101,21 @@ void	parse_texture(char *map, t_parse *parse)
 		if (!new_line)
 			break ;
 	}
+	check_texture_flag(parse);
+	while ((new_line = get_next_line(fd)) != NULL && *new_line == '\0')
+		free(new_line);
+	if (new_line == NULL)
+		exit(0);
 	parse->height = 1;
-	parse->height += count_file_height(fd);
-	printf("%d\n",parse->height);
+	free(new_line);
+	while ((new_line = get_next_line(fd)) != NULL)
+	{
+		parse->height++;
+		if (*new_line == '\0')
+			exit(0);
+		free(new_line);
+	}
+	printf("%d\n", parse->texture_height);
 	check_height(parse);
 	close(fd);
 }

@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:25:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/22 20:59:59 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:03:44 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,21 @@ typedef struct s_img {
 }	t_img;
 
 typedef struct s_parse {
-	int	pos_x;
-	int	pos_y;
-	int	xi;
-	int	yi;
-	int	top;
-	int	height;
-	int	width;
-	int	texture_flag;
-	int	texture_height;
+	int		pos_x;
+	int		pos_y;
+	int		xi;
+	int		yi;
+	int		top;
+	int		height;
+	int		width;
+	int		texture_flag;
+	int		texture_height;
+	bool	north_flag;
+	bool	sorth_flag;
+	bool	west_flag;
+	bool	east_flag;
+	bool	ceiling_flag;
+	bool	floor_flag;
 } t_parse;
 
 typedef struct s_field {
@@ -88,7 +94,6 @@ typedef struct s_field {
 	unsigned int	c_color;
 	unsigned int	f_color;
 }	t_field;
-
 
 typedef struct s_cub {
 	void	*mlx;
@@ -144,13 +149,12 @@ void	check_valid_map(t_field *field, t_parse *parse);
 int		count_file_height(int fd);
 bool	check_walk(int key_code, t_user *user, t_field *field);
 void	parse_texture(char *map, t_parse *parse);
-void    check_texture_north(char *line);
-void    check_texture_sorth(char *line);
-void    check_texture_west(char *line);
-void    check_texture_east(char *line);
-void	check_texture_floor(char *line);
-void	check_texture_ceiling(char *line);
-void	check_valid_texture(char *line);
-
+void	check_texture_north(char *line, t_parse *parse);
+void	check_texture_sorth(char *line, t_parse *parse);
+void	check_texture_west(char *line, t_parse *parse);
+void	check_texture_east(char *line, t_parse *parse);
+void	check_texture_floor(char *line, t_parse *parse);
+void	check_texture_ceiling(char *line, t_parse *parse);
+void	check_valid_texture(char *line, t_parse *parse);
 
 #endif

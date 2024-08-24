@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_check_height.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/23 10:47:41 by yususato          #+#    #+#             */
+/*   Updated: 2024/08/24 17:16:34 by yususato         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 static void	check_line_next(char *line, int *count)
@@ -26,7 +38,6 @@ void	read_file_height(int fd, int *count)
 	while (byte_size > 0)
 	{
 		byte_size = read(fd, buf, BUFFER_SIZE);
-		printf("%d\n", byte_size);
 		if (byte_size == -1)
 		{
 			free(buf);
