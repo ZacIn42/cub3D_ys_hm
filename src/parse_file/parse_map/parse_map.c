@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:02:48 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/24 16:58:37 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/24 21:51:45 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,24 @@ static void	insert_map_tmp(t_field *field, char *line, int *index)
 	return ;
 }
 
-static char	*ft_strdup_new(char *src)
+void	skip_texture(t_parse *parse, char *line, int *fd)
 {
-	int		i;
-	char	*new;
-
-	i = 0;
-	if (src == NULL)
-		return (NULL);
-	new = (char *)malloc(sizeof(char) * ft_strlen(src));
-	if (new == NULL)
-		return (NULL);
-	while (src[i] != '\0')
+	line = get_next_line(*fd);
+	if (!line)
+		exit(0);
+	while (count < parse->texture_height)
 	{
-		new[i] = src[i];
-		i++;
+		line = get_next_line(*fd);
+		if (!line)
+			exit(0);
+		free(line);
+		count++;
 	}
-	if (ft_strchr(new, '\n') && i != 0)
-		new[i - 1] = '\0';
-	else
-		new[i] = '\0';
-	return (new);
+	while ((line = get_next_line(*fd)) != NULL && *line == '\0')
+		free(line);
+	if (line == NULL)
+		exit(0);
+	return ;
 }
 
 void	read_map(char *map, t_field *field, t_parse *parse)
@@ -53,21 +50,7 @@ void	read_map(char *map, t_field *field, t_parse *parse)
 	count = 0;
 	fd = open(map, O_RDONLY);
 	field->map = (char **)ft_calloc(sizeof(char *), parse->height + 1);
-	line = get_next_line(fd);
-	if (!line)
-		exit(0);
-	while (count < parse->texture_height)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			exit(0);
-		free(line);
-		count++;
-	}
-	while ((line = get_next_line(fd)) != NULL && *line == '\0')
-		free(line);
-	if (line == NULL)
-		exit(0);
+	skip_texture(parse, line, &fd);
 	insert_map_tmp(field, line, &index);
 	free(line);
 	while (line)

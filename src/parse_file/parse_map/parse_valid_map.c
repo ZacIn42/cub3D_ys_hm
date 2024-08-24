@@ -6,13 +6,14 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:20:05 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/24 20:21:12 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/24 21:34:47 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static void	can_pass(t_field *field, t_parse *parse, t_vec *stack, bool visited[MAX_SIZE][MAX_SIZE])
+void	can_pass(t_field *field, t_parse *parse \
+				, t_vec *stack, bool visited[MAX_SIZE][MAX_SIZE])
 {
 	t_vec	next;
 
@@ -33,7 +34,8 @@ static void	can_pass(t_field *field, t_parse *parse, t_vec *stack, bool visited[
 	return ;
 }
 
-static bool	pass_find(t_field *field, t_parse *parse, t_vec *stack, bool visited[MAX_SIZE][MAX_SIZE])
+static bool	pass_find(t_field *field, t_parse *parse \
+						, t_vec *stack, bool visited[MAX_SIZE][MAX_SIZE])
 {
 	int			i;
 	static int	dx[] = {-1, 0, 1, 0};
@@ -78,41 +80,41 @@ static void	check_map(t_field *field, t_parse *parse)
 		exit(0);
 }
 
-void	check_valid_map(t_field *field, t_parse *parse)
+void	is_valid_map_content(t_field *field, int *pos_count)
 {
 	int	height;
-	int width;
-	int pos_count;
+	int	width;
 
 	height = 0;
 	width = 0;
-	pos_count = 0;
 	while (field->map[height])
 	{
 		while (field->map[height][width] && field->map[height][width] != '\0')
 		{
-			if (field->map[height][width] == 'N' \
-				|| field->map[height][width] == 'S' \
-				|| field->map[height][width] == 'W' \
-				|| field->map[height][width] == 'E')
+			if (check_first_pos(field, height, width))
 			{
-				pos_count++;
+				*pos_count++;
 				parse->pos_x = width;
 				parse->pos_y = height;
 			}
 			else if (field->map[height][width] != '1' \
 				&& field->map[height][width] != '0' \
 				&& field->map[height][width] != ' ')
-			{
-				printf("Error map\n");
-				exit(0);
-			}
+				put_error_printf("Error: Invalid map\n");
 			width++;
 		}
 		width = 0;
 		height++;
 	}
+}
+
+void	check_valid_map(t_field *field, t_parse *parse)
+{
+	int	pos_count;
+
+	pos_count = 0;
+	is_valid_map_content(field, &pos_count)
 	if (pos_count != 1)
-		exit(0);
+		put_error_printf("Error: many player\n");
 	check_map(field, parse);
 }
