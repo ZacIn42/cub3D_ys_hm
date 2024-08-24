@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:02:48 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/24 21:57:00 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/24 22:34:13 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ static void	skip_texture(t_parse *parse, char *line, int *fd)
 {
 	line = get_next_line(*fd);
 	if (!line)
-		exit(0);
+		exit(perror_return_one("Error: Faild to malloc\n"));
 	while (count < parse->texture_height)
 	{
 		line = get_next_line(*fd);
 		if (!line)
-			exit(0);
+			exit(perror_return_one("Error: Failed to malloc\n"));
 		free(line);
 		count++;
 	}
 	while ((line = get_next_line(*fd)) != NULL && *line == '\0')
 		free(line);
 	if (line == NULL)
-		exit(0);
+		exit(perror_return_one("Error: Failed to malloc\n"));
 	return ;
 }
 
@@ -62,5 +62,5 @@ void	read_map(char *map, t_field *field, t_parse *parse)
 		free(line);
 	}
 	close(fd);
-	check_valid_map(field, parse);
+	return ;
 }

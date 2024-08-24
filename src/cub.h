@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 22:00:04 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/24 22:36:35 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int		perror_return_one(char *error_message);
 void	free_str_array(char **str_array);
 
 //functions in parse_file
+void	parse_file(t_field *field, t_parse *parse, char *filename);
 void	read_map(char *map, t_field *field, t_parse *parse);
 void	check_valid_map(t_field *field, t_parse *parse);
 void	parse_texture(char *map, t_parse *parse);

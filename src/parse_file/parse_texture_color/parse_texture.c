@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:32:52 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/24 21:33:06 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/24 22:20:52 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	read_texture_content(t_parse *parse, char *new_line, int *fd)
 			break ;
 		new_line = get_next_line(*fd);
 		if (!new_line)
-			break ;
+			exit(perror_return_one("Error: missing texture and color\n"));
 	}
 	return ;
 }
@@ -40,14 +40,14 @@ static void	count_map_height(t_parse *parse, char *new_line, int *fd)
 	while ((new_line = get_next_line(*fd)) != NULL && *new_line == '\0')
 		free(new_line);
 	if (new_line == NULL)
-		exit(0);
+		exit(perror_return_one("Error: map is empty\n"));
 	parse->height = 1;
 	free(new_line);
 	while ((new_line = get_next_line(*fd)) != NULL)
 	{
 		parse->height++;
 		if (*new_line == '\0')
-			exit(0);
+			exit(perror_return_one("Error: blank in the middle of the map\n"));
 		free(new_line);
 	}
 	return ;
@@ -83,7 +83,7 @@ void	parse_texture(char *map, t_parse *parse)
 	fd = open(map, O_RDONLY);
 	new_line = get_next_line(fd);
 	if (new_line == NULL)
-		exit(0);
+		exit(perror_return_one("Error: file is empty\n"));
 	parse->texture_height = 0;
 	read_texture_content(parse, new_line, &fd);
 	check_texture_flag(parse);
