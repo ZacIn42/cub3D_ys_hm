@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   put_error_exit.c                                   :+:      :+:    :+:   */
+/*   free_str_array.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/24 18:09:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 20:41:51 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/06/13 08:58:04 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/08/24 20:35:09 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static void	put_error(char *error_message);
-
-int	perror_return_one(char *error_message)
+void	free_str_array(char **str_array)
 {
-	if (error_message != NULL)
-		put_error(error_message);
-	return (1);
-}
+	int	index;
 
-static void	put_error(char *error_message)
-{
-	if (error_message == NULL)
+	index = 0;
+	if (str_array == NULL)
 		return ;
-	while (*error_message != '\0')
+	while (str_array[index] != NULL)
 	{
-		if (write(2, error_message, 1) < 0)
-			return ;
-		error_message += 1;
+		free(str_array[index]);
+		index++;
 	}
+	free(str_array);
 }

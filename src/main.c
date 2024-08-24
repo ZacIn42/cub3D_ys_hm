@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:28:40 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 20:26:19 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/24 20:41:51 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,13 @@ int	main(int argc, char **argv)
 	t_cub		cub;
 
 	if (argc != 2)
-		put_error_exit("ERROR: 1 argument required: filename, *.cub\n");
+		exit(perror_return_one("ERROR: 1 argument required: filename, *.cub\n"));
 	parse_file(&field);
-	init_cub(&cub, &field);
+	if (init_cub(&cub, &field) != 0)
+	{
+		free_str_array(field->map);
+		exit(1);
+	}
 	set_mlx_hooks(&cub);
 	draw_wall(&cub, &field);
 	mlx_loop(cub.mlx);
@@ -35,15 +39,15 @@ static int	init_cub(t_cub *cub, t_field *field)
 {
 	cub->mlx = mlx_init();
 	if (cub->mlx == NULL)
-		put_error_exit("ERROR: failed to init mlx\n");
+		return (perror_return_one("ERROR: failed to init mlx\n"));
 	cub->window = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 	if (cub->window == NULL)
-		put_error_exit("ERROR: failed to create a new window\n");
+		return (perror_return_one("ERROR: failed to create a new window\n"));
 	cub->img.img = mlx_new_image(cub->mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (cub->img.img == NULL)
 	{
 		mlx_destroy_window(cub->mlx, cub->window);
-		put_error_exit("ERROR: failed to create a new image\n");
+		return (perror_return_one("ERROR: failed to create a new image\n"));
 	}
 	cub->img.width = WIN_WIDTH;
 	cub->img.height = WIN_HEIGHT;
@@ -53,7 +57,7 @@ static int	init_cub(t_cub *cub, t_field *field)
 	{
 		mlx_destroy_window(cub->mlx, cub->window);
 		mlx_destroy_image(cub->mlx, cub->img.img);
-		put_error_exit("ERROR: failed to get image address\n");
+		return (perror_return_one("ERROR: failed to get image address\n"));
 	}
 	cub->field = field;
 	return (0);
