@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 23:39:47 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/24 23:42:15 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 
 # define WIN_HEIGHT (768)
 # define WIN_WIDTH (768)
+# define MAX_SIZE (1024)
 
 typedef struct s_vec {
 	double	x;
