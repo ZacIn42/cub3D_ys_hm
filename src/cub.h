@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 18:12:49 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/24 18:59:12 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,17 @@ enum {
 	ESC_KEY = 65307,
 };
 
+//functions for parsing the file
+void	read_map(char *map, t_field *field, t_parse *parse);
+char	*get_next_line(int fd);
+
+//functions for draw_scene
+int		draw_scene(t_cub *cub, t_field *field);
+t_vec	*cast_ray(const t_vec *pos, double theta, char **map);
+int		draw_vertical(t_cub *cub, t_user *user, t_vec *spot, int x);
+int		refresh_image(t_img *canvas, unsigned int c, unsigned int f);
+
+//functions in utils
 void	put_error_exit(char *error_message);
 
 #endif
