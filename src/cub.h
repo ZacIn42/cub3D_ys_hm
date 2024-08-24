@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/23 09:04:47 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/24 18:12:49 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,7 @@ enum {
 	MOVE_LEFT_KEY = 97,
 	ESC_KEY = 65307,
 };
+
+void	put_error_exit(char *error_message);
 
 #endif
