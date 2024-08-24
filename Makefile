@@ -6,43 +6,42 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/31 19:23:35 by hmiyazak          #+#    #+#              #
-#    Updated: 2024/08/24 18:39:29 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/08/24 21:42:51 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I. -Ilibft
-MLXOBJFLAGS = -I/usr/include -Imlx_linux -O3
-MLXFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+CFLAGS = -Wall -Wextra -Werror
 SRCDIR = src
 OBJDIR = objects
-BINDIR = bin
 LIBDIR = libft
 LIBFT = $(LIBDIR)/libft.a
-TARGET = $(BINDIR)/$(NAME)
+MLXDIR = $(SRCDIR)/mlx_linux
+MLXFLAGS = -L/usr/lib -lXext -lX11 -lm -lz
+MLXOBJFLAGS = -I/usr/include -O3
+MLXLIB = $(MLXDIR)/libmlx_Linux.a
+IFLAGS = -I$(SRCDIR) -I$(LIBDIR) -I$(MLXDIR)
+
 RM = rm -rf
 
-SRCFILES = $(wildcard $(SRCDIR)/*.c)
+SRCFILES = $(shell find $(SRCDIR) -name '*.c')
 
-OBJFILES = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCFILES))
+OBJFILES = $(patsubst %.c,$(OBJDIR)/%.o,$(notdir $(SRCFILES)))
+
+all: $(NAME)
 
 $(OBJDIR):
-	mkdir -p $@
-
-$(BINDIR):
 	mkdir -p $@
 
 $(LIBFT):
 	$(MAKE) -C $(LIBDIR)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(OBJDIR)
-	$(CC) $(CFLAGS) $(MLXFLAGS) -c $< -o $@
+%.o: %.c $(OBJDIR)
+	$(CC) $(CFLAGS) $(IFLAGS) $(MLXOBJFLAGS) -c $(SRCDIR)/$< -o $(OBJDIR)/%.c
 
-all: $(TARGET)
-
-$(TARGET): $(OBJFILES) $(BINDIR)
-	$(CC) $(CFLAGS) $(OBJFILES) ./mlx_linux/libmlx_Linux.a -o $@
+$(NAME): $(OBJFILES)
+	$(CC) $(CFLAGS) $(IFLAGS) $(MLXFLAGS) $(OBJFILES) $(MLXLIB) -o $@
 
 clean:
 	$(MAKE) clean -C $(LIBDIR)
@@ -50,7 +49,7 @@ clean:
 
 fclean: clean
 	$(MAKE) fclean -C $(LIBDIR)
-	$(RM) $(BINDIR)
+	$(RM) $(NAME)
 
 re: fclean all
 

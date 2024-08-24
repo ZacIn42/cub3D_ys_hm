@@ -6,14 +6,14 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 20:53:13 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/24 21:07:07 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_H
 # define CUB_H
 
-# include "./mlx_linux/mlx.h"
+# include "mlx.h"
 # include "libft.h"
 # include <math.h>
 # include <unistd.h>
@@ -73,6 +73,24 @@ typedef struct s_cub {
 	t_img	img;
 	t_field	*field;
 }	t_cub;
+
+typedef struct s_parse {
+	int		pos_x;
+	int		pos_y;
+	int		xi;
+	int		yi;
+	int		top;
+	int		height;
+	int		width;
+	int		texture_flag;
+	int		texture_height;
+	bool	north_flag;
+	bool	sorth_flag;
+	bool	west_flag;
+	bool	east_flag;
+	bool	ceiling_flag;
+	bool	floor_flag;
+}	t_parse;
 
 enum {
 	ON_KEYDOWN = 2,
