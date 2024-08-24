@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 09:09:12 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 19:32:19 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/24 23:34:10 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ static int	key_hook(int key_code, t_cub *cub)
 	else
 		return (1);
 	mlx_clear_window(cub->mlx, cub->window);
-	draw_wall(cub, cub->field);
+	draw_scene(cub, cub->field);
 	return (0);
 }

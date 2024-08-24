@@ -6,7 +6,7 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/31 19:23:35 by hmiyazak          #+#    #+#              #
-#    Updated: 2024/08/24 23:19:34 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/08/24 23:33:17 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,14 +26,14 @@ IFLAGS = -I$(SRCDIR) -I$(LIBDIR) -I$(MLXDIR)
 RM = rm -rf
 
 SRCS = $(shell find $(SRCDIR) -type f -name '*.c')
-OBJS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCS))
+OBJS = $(subst $(SRCDIR),$(OBJDIR),$(SRCS:.c=.o))
 
 all: $(NAME)
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBDIR)
 
-$(OBJDIR)/%o: $(SRCDIR)/%.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
 	mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(IFLAGS) $(MLXOBJFLAGS) -c $< -o $@
 

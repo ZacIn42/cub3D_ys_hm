@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 21:07:07 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/24 23:34:47 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ int		close_window_cross(t_cub *cub);
 int		close_window_esc(int key_code, t_cub *cub);
 int		look_around(int key_code, t_user *user);
 int		move(int key_code, t_user *user);
+//fook error handling
+bool	check_walk(int key_code, t_user *user, t_field *field);
 
 //functions to handle struct vec
 void	vec_init(t_vec *vec, double x, double y);
