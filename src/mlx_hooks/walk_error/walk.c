@@ -1,6 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   walk.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/24 19:22:27 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/08/24 19:25:50 by hmiyazak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
-bool	check_forward(t_user *user, t_field *field)
+bool	check_north(t_user *user, t_field *field);
+bool	check_west(t_user *user, t_field *field);
+bool	check_south(t_user *user, t_field *field);
+bool	check_east(t_user *user, t_field *field);
+
+static bool	check_forward(t_user *user, t_field *field)
 {
 	if (user->dir == EAST)
 		return (check_east(user, field));
@@ -13,7 +30,7 @@ bool	check_forward(t_user *user, t_field *field)
 	return (true);
 }
 
-bool	check_right(t_user *user, t_field *field)
+static bool	check_right(t_user *user, t_field *field)
 {
 	if (user->dir == EAST)
 		return (check_south(user, field));
@@ -26,7 +43,7 @@ bool	check_right(t_user *user, t_field *field)
 	return (true);
 }
 
-bool	check_back(t_user *user, t_field *field)
+static bool	check_back(t_user *user, t_field *field)
 {
 	if (user->dir == EAST)
 		return (check_west(user, field));
@@ -39,7 +56,7 @@ bool	check_back(t_user *user, t_field *field)
 	return (true);
 }
 
-bool	check_left(t_user *user, t_field *field)
+static bool	check_left(t_user *user, t_field *field)
 {
 	if (user->dir == EAST)
 		return (check_north(user, field));
@@ -64,4 +81,3 @@ bool	check_walk(int key_code, t_user *user, t_field *field)
 		return (check_left(user, field));
 	return (true);
 }
-
