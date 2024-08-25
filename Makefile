@@ -6,51 +6,47 @@
 #    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/31 19:23:35 by hmiyazak          #+#    #+#              #
-#    Updated: 2024/08/24 18:39:29 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/08/24 23:33:17 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I. -Ilibft
-MLXOBJFLAGS = -I/usr/include -Imlx_linux -O3
-MLXFLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+CFLAGS = -Wall -Wextra -Werror
 SRCDIR = src
 OBJDIR = objects
-BINDIR = bin
 LIBDIR = libft
 LIBFT = $(LIBDIR)/libft.a
-TARGET = $(BINDIR)/$(NAME)
+MLXDIR = $(SRCDIR)/mlx_linux
+MLXFLAGS = -L/usr/lib -lXext -lX11 -lm -lz
+MLXOBJFLAGS = -I/usr/include -O3
+MLXLIB = $(MLXDIR)/libmlx_Linux.a
+IFLAGS = -I$(SRCDIR) -I$(LIBDIR) -I$(MLXDIR)
+
 RM = rm -rf
 
-SRCFILES = $(wildcard $(SRCDIR)/*.c)
+SRCS = $(shell find $(SRCDIR) -type f -name '*.c')
+OBJS = $(subst $(SRCDIR),$(OBJDIR),$(SRCS:.c=.o))
 
-OBJFILES = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SRCFILES))
-
-$(OBJDIR):
-	mkdir -p $@
-
-$(BINDIR):
-	mkdir -p $@
+all: $(NAME)
 
 $(LIBFT):
-	$(MAKE) -C $(LIBDIR)
+	@$(MAKE) -C $(LIBDIR)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(OBJDIR)
-	$(CC) $(CFLAGS) $(MLXFLAGS) -c $< -o $@
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	mkdir -p $(@D)
+	$(CC) $(CFLAGS) $(IFLAGS) $(MLXOBJFLAGS) -c $< -o $@
 
-all: $(TARGET)
-
-$(TARGET): $(OBJFILES) $(BINDIR)
-	$(CC) $(CFLAGS) $(OBJFILES) ./mlx_linux/libmlx_Linux.a -o $@
+$(NAME): $(OBJS) | $(LIBFT)
+	$(CC) $(CFLAGS) $(IFLAGS) $(MLXFLAGS) $(OBJS) $(MLXLIB) $(LIBFT) -o $@
 
 clean:
-	$(MAKE) clean -C $(LIBDIR)
+	@$(MAKE) clean -C $(LIBDIR)
 	$(RM) $(OBJDIR)
 
 fclean: clean
-	$(MAKE) fclean -C $(LIBDIR)
-	$(RM) $(BINDIR)
+	@$(MAKE) fclean -C $(LIBDIR)
+	$(RM) $(NAME)
 
 re: fclean all
 

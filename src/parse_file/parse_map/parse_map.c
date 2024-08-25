@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:02:48 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/24 22:34:13 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/25 13:51:14 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ static void	insert_map_tmp(t_field *field, char *line, int *index)
 	return ;
 }
 
-static void	skip_texture(t_parse *parse, char *line, int *fd)
+static void	skip_texture(t_parse *parse, char *line, int *fd, int *count)
 {
 	line = get_next_line(*fd);
 	if (!line)
 		exit(perror_return_one("Error: Faild to malloc\n"));
-	while (count < parse->texture_height)
+	while (*count < parse->texture_height)
 	{
 		line = get_next_line(*fd);
 		if (!line)
 			exit(perror_return_one("Error: Failed to malloc\n"));
 		free(line);
-		count++;
+		(*count)++;
 	}
 	while ((line = get_next_line(*fd)) != NULL && *line == '\0')
 		free(line);
@@ -48,9 +48,10 @@ void	read_map(char *map, t_field *field, t_parse *parse)
 
 	index = 0;
 	count = 0;
+	line = NULL;
 	fd = open(map, O_RDONLY);
 	field->map = (char **)ft_calloc(sizeof(char *), parse->height + 1);
-	skip_texture(parse, line, &fd);
+	skip_texture(parse, line, &fd, &count);
 	insert_map_tmp(field, line, &index);
 	free(line);
 	while (line)
