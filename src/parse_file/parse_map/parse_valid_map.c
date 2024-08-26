@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:20:05 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/24 22:30:57 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/25 13:55:14 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	check_map(t_field *field, t_parse *parse)
 		exit(perror_return_one("Error: Map is not surrounded by walls\n"));
 }
 
-static void	is_valid_map_content(t_field *field, int *pos_count)
+static void	is_valid_map_content(t_field *field, t_parse *parse, int *pos_count)
 {
 	int	height;
 	int	width;
@@ -94,7 +94,7 @@ static void	is_valid_map_content(t_field *field, int *pos_count)
 		{
 			if (check_first_pos(field, height, width))
 			{
-				*pos_count++;
+				(*pos_count)++;
 				parse->pos_x = width;
 				parse->pos_y = height;
 			}
@@ -114,8 +114,9 @@ void	check_valid_map(t_field *field, t_parse *parse)
 	int	pos_count;
 
 	pos_count = 0;
-	is_valid_map_content(field, &pos_count);
+	is_valid_map_content(field, parse, &pos_count);
 	if (pos_count != 1)
 		exit(perror_return_one("Error: many player\n"));
+	check_map(field, parse);
 	return ;
 }

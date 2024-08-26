@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 23:46:22 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/26 17:30:24 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@
 
 # define WIN_HEIGHT (768)
 # define WIN_WIDTH (768)
+# define MAX_SIZE (1024)
+
+# ifndef BUFFER_SIZE
+
+# define BUFFER_SIZE (20)
+
+# endif
 
 typedef struct s_vec {
 	double	x;
@@ -141,7 +148,7 @@ int		perror_return_one(char *error_message);
 void	free_str_array(char **str_array);
 
 //functions in parse_file
-void	parse_file(t_field *field, t_parse *parse, char *filename);
+void	parse_file(t_field *field, char *filename);
 void	read_map(char *map, t_field *field, t_parse *parse);
 void	check_valid_map(t_field *field, t_parse *parse);
 void	parse_texture(char *map, t_parse *parse);
@@ -156,6 +163,7 @@ void	check_texture_floor(char *line, t_parse *parse);
 bool	check_space(t_field *field, t_parse *parse);
 bool	check_first_pos(t_field *field, int yi, int xi);
 bool	check_wall(t_field *field, t_parse *parse);
-
+void	check_height(t_parse *parse);
+void	check_texture_flag(t_parse *parse);
 
 #endif
