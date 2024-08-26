@@ -6,20 +6,13 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:32:52 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/24 17:04:53 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/26 17:24:28 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static void	check_height(t_parse *parse)
-{
-	if (parse->height < 3)
-		exit(0);
-	return ;
-}
-
-void	check_valid_texture(char *line, t_parse *parse)
+static void	check_valid_texture(char *line, t_parse *parse)
 {
 	if (line[0] == 'N')
 		check_texture_north(line, parse);
@@ -34,88 +27,66 @@ void	check_valid_texture(char *line, t_parse *parse)
 	else if (line[0] == 'C')
 		check_texture_ceiling(line, parse);
 	else if (line[0] == '\n')
-        return ;
+		return ;
 	return ;
 }
 
-static char	*ft_strdup_new(char *src)
+static void	read_texture_content(t_parse *parse, char *new_line, int *fd, int *count)
 {
-	int		i;
-	char	*new;
-
-	i = 0;
-	if (src == NULL)
-		return (NULL);
-	new = (char *)malloc(sizeof(char) * ft_strlen(src + 1));
-	if (new == NULL)
-		return (NULL);
-	while (src[i] != '\0')
-	{
-		new[i] = src[i];
-		i++;
-	}
-	if (ft_strchr(new, '\n') && i != 0)
-		new[i - 1] = '\0';
-	else
-		new[i] = '\0';
-	return (new);
-}
-
-void	check_texture_flag(t_parse *parse)
-{
-	if (parse->north_flag == true && parse->sorth_flag == true \
-		&& parse->west_flag == true && parse->east_flag == true \
-		&& parse->ceiling_flag == true && parse->floor_flag == true)
-		return ;
-	exit(0);
-}
-
-void	parse_texture(char *map, t_parse *parse)
-{
-	int		count;
-	int		fd;
-	char	*line;
-	char	*new_line;
-
-	count = 0;
-	fd = open(map, O_RDONLY);
-	new_line = get_next_line(fd);
-	if (new_line == NULL)
-		exit(0);
-	parse->texture_height = 0;
 	while (new_line)
 	{
 		parse->texture_height++;
 		if (*new_line == '\0')
 		{
 			free(new_line);
-			new_line = get_next_line(fd);
+			new_line = get_next_line(*fd);
 			continue ;
 		}
-		count++;
+		(*count)++;
 		check_valid_texture(new_line, parse);
 		free(new_line);
-		if (count == 6)
+		if (*count == 6)
 			break ;
-		new_line = get_next_line(fd);
+		new_line = get_next_line(*fd);
 		if (!new_line)
-			break ;
+			exit(perror_return_one("Error: missing texture and color\n"));
 	}
-	check_texture_flag(parse);
-	while ((new_line = get_next_line(fd)) != NULL && *new_line == '\0')
+	return ;
+}
+
+static void	count_map_height(t_parse *parse, char *new_line, int *fd)
+{
+	while ((new_line = get_next_line(*fd)) != NULL && *new_line == '\0')
 		free(new_line);
 	if (new_line == NULL)
-		exit(0);
+		exit(perror_return_one("Error: map is empty\n"));
 	parse->height = 1;
 	free(new_line);
-	while ((new_line = get_next_line(fd)) != NULL)
+	while ((new_line = get_next_line(*fd)) != NULL)
 	{
 		parse->height++;
 		if (*new_line == '\0')
-			exit(0);
+			exit(perror_return_one("Error: blank in the middle of the map\n"));
 		free(new_line);
 	}
-	printf("%d\n", parse->texture_height);
+	return ;
+}
+
+void	parse_texture(char *map, t_parse *parse)
+{
+	int		count;
+	int		fd;
+	char	*new_line;
+
+	count = 0;
+	fd = open(map, O_RDONLY);
+	new_line = get_next_line(fd);
+	if (new_line == NULL)
+		exit(perror_return_one("Error: file is empty\n"));
+	parse->texture_height = 0;
+	read_texture_content(parse, new_line, &fd, &count);
+	check_texture_flag(parse);
+	count_map_height(parse, new_line, &fd);
 	check_height(parse);
 	close(fd);
 }
