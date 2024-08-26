@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/26 17:30:24 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/26 17:32:50 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <errno.h>
 # include <limits.h>
 # include <string.h>
+# include <stdint.h>
 
 # define WIN_HEIGHT (768)
 # define WIN_WIDTH (768)
