@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/26 17:32:50 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/27 11:48:46 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,13 +152,13 @@ void	free_str_array(char **str_array);
 void	parse_file(t_field *field, char *filename);
 void	read_map(char *map, t_field *field, t_parse *parse);
 void	check_valid_map(t_field *field, t_parse *parse);
-void	parse_texture(char *map, t_parse *parse);
-void	check_texture_north(char *line, t_parse *parse);
-void	check_texture_sorth(char *line, t_parse *parse);
-void	check_texture_west(char *line, t_parse *parse);
-void	check_texture_east(char *line, t_parse *parse);
-void	check_texture_ceiling(char *line, t_parse *parse);
-void	check_texture_floor(char *line, t_parse *parse);
+void	parse_texture(t_field *field, char *filename, t_parse *parse);
+void	check_texture_north(t_field *field, char *line, t_parse *parse);
+void	check_texture_sorth(t_field *field, char *line, t_parse *parse);
+void	check_texture_west(t_field *field, char *line, t_parse *parse);
+void	check_texture_east(t_field *field, char *line, t_parse *parse);
+void	check_texture_ceiling(t_field *field, char *line, t_parse *parse);
+void	check_texture_floor(t_field *field, char *line, t_parse *parse);
 
 //functions in utils of parse_file
 bool	check_space(t_field *field, t_parse *parse);

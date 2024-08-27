@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
+#    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/31 19:23:35 by hmiyazak          #+#    #+#              #
-#    Updated: 2024/08/24 23:33:17 by hmiyazak         ###   ########.fr        #
+#    Updated: 2024/08/27 14:03:42 by yususato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+# CFLAGS = -Wall -Wextra -Werror
 SRCDIR = src
 OBJDIR = objects
 LIBDIR = libft

@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:05:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/26 17:32:55 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/27 14:10:31 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	main(int argc, char *argv[])
 		exit(1);
 	}
 	init_textures(&cub.mlx, &field);
+	write(1,"a\n",2);
 	set_mlx_hooks(&cub);
 	draw_scene(&cub, &field);
 	mlx_loop(cub.mlx);
@@ -152,6 +153,7 @@ static int	init_cub(t_cub *cub, t_field *field)
 
 static int	init_textures(void *mlx, t_field *fld)
 {
+	printf("%p,\n ",fld->texture[NORTH]);
 	if (init_img(mlx, &fld->textures[NORTH], fld->texture_paths[NORTH]) != 0)
 		return (1);
 	if (init_img(mlx, &fld->textures[EAST], fld->texture_paths[EAST]) != 0)
