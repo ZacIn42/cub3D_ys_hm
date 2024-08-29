@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:05:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/27 14:10:31 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/29 17:17:33 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ int	main(int argc, char *argv[])
 		free_str_array(field.map);
 		exit(1);
 	}
-	init_textures(&cub.mlx, &field);
-	write(1,"a\n",2);
+	init_textures(cub.mlx, &field);
 	set_mlx_hooks(&cub);
 	draw_scene(&cub, &field);
 	mlx_loop(cub.mlx);
@@ -104,7 +103,7 @@ int	main(int argc, char *argv[])
 // 	// 	"11110111111111011101010010001",
 // 	// 	"11000000110101011100000010001",
 // 	// 	"10000000000000001100000010001",
-// 	// 	"10000000000000001101010010001",
+// 	// 	"10000000000000001101010010001",&
 // 	// 	"11000001110101011111011110N01aaa11",
 // 	// 	"11110111 1110101 101111010001",
 // 	// 	"11111111 1111111 111111111111",
@@ -153,7 +152,6 @@ static int	init_cub(t_cub *cub, t_field *field)
 
 static int	init_textures(void *mlx, t_field *fld)
 {
-	printf("%p,\n ",fld->texture[NORTH]);
 	if (init_img(mlx, &fld->textures[NORTH], fld->texture_paths[NORTH]) != 0)
 		return (1);
 	if (init_img(mlx, &fld->textures[EAST], fld->texture_paths[EAST]) != 0)
