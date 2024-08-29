@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 17:50:58 by yususato          #+#    #+#             */
-/*   Updated: 2023/05/20 17:55:25 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/27 11:18:27 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*ft_strdup(const char *src)
 
 	i = 0;
 	count = 0;
+	if (src == NULL)
+		return (NULL);
 	while (src[i] != '\0')
 	{
 		count++;

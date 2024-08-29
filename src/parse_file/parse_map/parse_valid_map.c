@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_valid_map.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:20:05 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/25 13:55:14 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/29 17:25:20 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,7 @@ void	check_valid_map(t_field *field, t_parse *parse)
 	if (pos_count != 1)
 		exit(perror_return_one("Error: many player\n"));
 	check_map(field, parse);
+	field->user.pos.x = (double)parse->pos_x + 0.5;
+	field->user.pos.y = (double)parse->pos_y + 0.5;
 	return ;
 }
