@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 09:09:12 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 23:34:10 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:39:26 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,13 @@ static int	key_hook(int key_code, t_cub *cub)
 		return (close_window_esc(key_code, cub));
 	else
 		return (1);
-	mlx_clear_window(cub->mlx, cub->window);
-	draw_scene(cub, cub->field);
+	if (draw_scene(cub, cub->field) != 0)
+	{
+		free_str_array(cub->field->map);
+		destroy_textures(cub->mlx, cub->field);
+		mlx_destroy_image(cub->mlx, cub->img.img);
+		mlx_destroy_window(cub->mlx, cub->window);
+		exit(1);
+	}
 	return (0);
 }

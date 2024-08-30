@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:05:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/30 10:15:24 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:37:37 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,18 @@ int	main(int argc, char *argv[])
 	if (init_cub(&cub, &field) != 0)
 	{
 		free_str_array(field.map);
+		destroy_textures(cub.mlx, &field);
 		exit(1);
 	}
-	if (init_textures(cub.mlx, &field) != 0)
+	if (draw_scene(&cub, &field) != 0)
 	{
 		free_str_array(field.map);
+		destroy_textures(cub.mlx, &field);
 		mlx_destroy_image(cub.mlx, cub.img.img);
 		mlx_destroy_window(cub.mlx, cub.window);
 		exit(1);
 	}
 	set_mlx_hooks(&cub);
-	draw_scene(&cub, &field);
 	mlx_loop(cub.mlx);
 	exit(0);
 }
