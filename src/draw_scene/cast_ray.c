@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 12:46:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 21:34:31 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/30 09:36:43 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_vec	*cast_ray(const t_vec *pos, double theta, char **map)
 
 	current_ray = (t_vec *)malloc(sizeof(t_vec));
 	if (current_ray == NULL)
-		exit(perror_return_one("ERROR: failed to allocate memory\n"));
+		exit(perror_return_one("failed to allocate memory\n"));
 	vec_init(current_ray, pos->x, pos->y);
 	vec_init(&next_block, (int)pos->x, (int)pos->y);
 	while (true)

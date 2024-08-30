@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:02:48 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/27 11:32:28 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/30 09:36:43 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@ static void	insert_map_tmp(t_field *field, char *line, int *index)
 static void	skip_texture(t_parse *parse, char **line, int fd, int *count)
 {
 	if (!*line)
-		exit(perror_return_one("Error: Faild to malloc\n"));
+		exit(perror_return_one("Faild to malloc\n"));
 	while (*count < parse->texture_height)
 	{
 		*line = get_next_line(fd);
 		if (!*line)
-			exit(perror_return_one("Error: Failed to malloc\n"));
+			exit(perror_return_one("Failed to malloc\n"));
 		free(line);
 		(*count)++;
 	}
 	while ((*line = get_next_line(fd)) != NULL && **line == '\0')
 		free(line);
 	if (*line == NULL)
-		exit(perror_return_one("Error: Failed to malloc\n"));
+		exit(perror_return_one("Failed to malloc\n"));
 	return ;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:32:52 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/27 11:02:30 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/30 09:36:43 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	read_texture_content(t_field *field, t_parse *parse, char *new_line,
 			break ;
 		new_line = get_next_line(fd);
 		if (!new_line)
-			exit(perror_return_one("Error: missing texture and color\n"));
+			exit(perror_return_one("missing texture and color\n"));
 	}
 	return ;
 }
@@ -62,14 +62,14 @@ static void	count_map_height(t_parse *parse, char *new_line, int fd)
 	while ((new_line = get_next_line(fd)) != NULL && *new_line == '\0')
 		free(new_line);
 	if (new_line == NULL)
-		exit(perror_return_one("Error: map is empty\n"));
+		exit(perror_return_one("map is empty\n"));
 	parse->height = 1;
 	free(new_line);
 	while ((new_line = get_next_line(fd)) != NULL)
 	{
 		parse->height++;
 		if (*new_line == '\0')
-			exit(perror_return_one("Error: blank in the middle of the map\n"));
+			exit(perror_return_one("blank in the middle of the map\n"));
 		free(new_line);
 	}
 	return ;
@@ -85,7 +85,7 @@ void	parse_texture(t_field *field, char *map, t_parse *parse)
 	fd = open(map, O_RDONLY);
 	new_line = get_next_line(fd);
 	if (new_line == NULL)
-		exit(perror_return_one("Error: file is empty\n"));
+		exit(perror_return_one("file is empty\n"));
 	parse->texture_height = 0;
 	read_texture_content(field, parse, new_line, fd);
 	check_texture_flag(parse);

@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:20:05 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/29 17:25:20 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/30 09:36:43 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	can_pass(t_field *field, t_parse *parse \
 			|| parse->xi == (int)ft_strlen(field->map[parse->yi -1]) - 1)
 				exit(0);
 		if (check_wall(field, parse) == false)
-			exit(perror_return_one("Error: Map is not surrounded by walls\n"));
+			exit(perror_return_one("Map is not surrounded by walls\n"));
 		parse->top++;
 		visited[parse->yi][parse->xi] = true;
 		stack[parse->top] = next;
@@ -78,7 +78,7 @@ static void	check_map(t_field *field, t_parse *parse)
 	stack[parse->top] = node;
 	visited[parse->pos_y][parse->pos_x] = true;
 	if (!pass_find(field, parse, stack, visited))
-		exit(perror_return_one("Error: Map is not surrounded by walls\n"));
+		exit(perror_return_one("Map is not surrounded by walls\n"));
 }
 
 static void	is_valid_map_content(t_field *field, t_parse *parse, int *pos_count)
@@ -101,7 +101,7 @@ static void	is_valid_map_content(t_field *field, t_parse *parse, int *pos_count)
 			else if (field->map[height][width] != '1' \
 				&& field->map[height][width] != '0' \
 				&& field->map[height][width] != ' ')
-				exit(perror_return_one("Error: Invalid map\n"));
+				exit(perror_return_one("Invalid map\n"));
 			width++;
 		}
 		width = 0;
@@ -116,7 +116,7 @@ void	check_valid_map(t_field *field, t_parse *parse)
 	pos_count = 0;
 	is_valid_map_content(field, parse, &pos_count);
 	if (pos_count != 1)
-		exit(perror_return_one("Error: many player\n"));
+		exit(perror_return_one("many player\n"));
 	check_map(field, parse);
 	field->user.pos.x = (double)parse->pos_x + 0.5;
 	field->user.pos.y = (double)parse->pos_y + 0.5;

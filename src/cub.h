@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/27 11:48:46 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/30 10:21:47 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@
 # define MAX_SIZE (1024)
 
 # ifndef BUFFER_SIZE
-
-# define BUFFER_SIZE (20)
-
+#  define BUFFER_SIZE (20)
 # endif
 
 typedef struct s_vec {
@@ -120,10 +118,6 @@ enum {
 	ESC_KEY = 65307,
 };
 
-//functions for parsing the file
-void	read_map(char *map, t_field *field, t_parse *parse);
-char	*get_next_line(int fd);
-
 //functions for draw_scene
 int		draw_scene(t_cub *cub, t_field *field);
 t_vec	*cast_ray(const t_vec *pos, double theta, char **map);
@@ -144,11 +138,16 @@ void	vec_init(t_vec *vec, double x, double y);
 void	vec_add(t_vec *ans, t_vec *lhs, t_vec *rhs);
 void	vec_sub(t_vec *ans, t_vec *lhs, t_vec *rhs);
 
+//functions to handle texture images
+int		init_textures(void *mlx, t_field *fld);
+void	destroy_textures(void *mlx, t_field *field);
+
 //functions in utils
 int		perror_return_one(char *error_message);
 void	free_str_array(char **str_array);
 
 //functions in parse_file
+char	*get_next_line(int fd);
 void	parse_file(t_field *field, char *filename);
 void	read_map(char *map, t_field *field, t_parse *parse);
 void	check_valid_map(t_field *field, t_parse *parse);
