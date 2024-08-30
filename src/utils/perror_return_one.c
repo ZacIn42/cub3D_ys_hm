@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   perror_return_one.c                                   :+:      :+:    :+:   */
+/*   put_error_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/24 18:09:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 20:41:51 by hmiyazak         ###   ########.fr       */
+/*   Created: 2024/08/30 09:37:09 by hmiyazak          #+#    #+#             */
+/*   Updated: 2024/08/30 09:37:20 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ static void	put_error(char *error_message);
 int	perror_return_one(char *error_message)
 {
 	if (error_message != NULL)
+	{
+		put_error("ERROR: ");
 		put_error(error_message);
+	}
 	return (1);
 }
 
