@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 10:00:01 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/31 11:00:24 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/31 11:24:52 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ static int	init_img(void *mlx, t_img *img, char *file_path)
 {
 	img->img = mlx_xpm_file_to_image(mlx, file_path, &img->width, &img->height);
 	if (img->img == NULL)
+	{
+		perror(file_path);
 		return (perror_return_one("failed to create image from .xpm file\n"));
+	}
 	img->addr = \
 		mlx_get_data_addr(img->img, &img->bpp, &img->line_len, &img->endian);
 	if (img->addr == NULL)
