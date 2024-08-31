@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:02:48 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/31 11:14:08 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/31 18:30:39 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,12 @@ static void	skip_texture(t_parse *parse, char **line, int fd, int *count)
 		free(line);
 		(*count)++;
 	}
-	while ((*line = get_next_line(fd)) != NULL && **line == '\0')
-		free(line);
+	*line = get_next_line(fd);
+	while (*line && **line == '\0')
+	{
+		free(*line);
+		*line = get_next_line(fd);
+	}
 	if (*line == NULL)
 		exit(perror_return_one("Failed to malloc\n"));
 	return ;
@@ -48,8 +52,12 @@ int	read_map(char *map, t_field *field, t_parse *parse)
 	index = 0;
 	count = 0;
 	fd = open(map, O_RDONLY);
+	if (fd == -1)
+		return (perror_return_one("failed open file"));
 	field->map = (char **)ft_calloc(sizeof(char *), parse->height + 1);
 	line = get_next_line(fd);
+	if (line == NULL)
+		return (perror_return_one("failed read fail"));
 	skip_texture(parse, &line, fd, &count);
 	insert_map_tmp(field, line, &index);
 	free(line);

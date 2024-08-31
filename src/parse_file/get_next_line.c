@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:29:02 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/31 10:40:02 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/31 18:10:33 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,6 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = output(buffer);
 	buffer = line_next(buffer, line);
+	printf("%p\n",line);
 	return (line);
 }

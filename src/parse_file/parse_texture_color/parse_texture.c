@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:32:52 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/31 11:13:11 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/31 18:17:50 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static int	check_valid_texture(t_field *field, char *line, t_parse *parse)
 	return (0);
 }
 
-static int	read_texture_content(t_field *field, t_parse *parse, char *new_line, int fd)
+static int	read_texture_content(t_field *field, t_parse *parse \
+									, char *new_line, int fd)
 {
 	int	count;
 
@@ -47,7 +48,7 @@ static int	read_texture_content(t_field *field, t_parse *parse, char *new_line, 
 		}
 		count++;
 		if (check_valid_texture(field, new_line, parse) != 0)
-			return (0);
+			return (1);
 		free(new_line);
 		if (count == 6)
 			break ;
@@ -60,18 +61,24 @@ static int	read_texture_content(t_field *field, t_parse *parse, char *new_line, 
 
 static int	count_map_height(t_parse *parse, char *new_line, int fd)
 {
-	while ((new_line = get_next_line(fd)) != NULL && *new_line == '\0')
+	new_line = get_next_line(fd);
+	while (new_line && *new_line == '\0')
+	{
 		free(new_line);
+		new_line = get_next_line(fd);
+	}
 	if (new_line == NULL)
 		return (perror_return_one("map is empty\n"));
 	parse->height = 1;
 	free(new_line);
-	while ((new_line = get_next_line(fd)) != NULL)
+	new_line = get_next_line(fd);
+	while (new_line)
 	{
 		parse->height++;
 		if (*new_line == '\0')
 			return (perror_return_one("blank in the middle of the map\n"));
 		free(new_line);
+		new_line = get_next_line(fd);
 	}
 	return (0);
 }
