@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:05:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/30 10:37:37 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/31 11:03:25 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ int	main(int argc, char *argv[])
 
 	if (argc != 2 || check_file(argv[1]) == false)
 		exit(perror_return_one("argument should be a readable file, *.cub\n"));
-	parse_file(&field, argv[1]);
 	if (init_cub(&cub, &field) != 0)
+		exit(1);
+	if (parse_file(&cub, argv[1]) != 0)
 	{
-		free_str_array(field.map);
-		destroy_textures(cub.mlx, &field);
+		mlx_destroy_image(cub.mlx, cub.img.img);
+		mlx_destroy_window(cub.mlx, cub.window);
 		exit(1);
 	}
 	if (draw_scene(&cub, &field) != 0)
@@ -58,8 +59,11 @@ static bool	check_file(char *filename)
 		perror(filename);
 		return (false);
 	}
-	else
-		close(fd);
+	else if (close(fd) != 0)
+	{
+		perror(filename);
+		return (false);
+	}
 	return (true);
 }
 
@@ -80,7 +84,7 @@ static int	init_cub(t_cub *cub, t_field *field)
 	cub->img.width = WIN_WIDTH;
 	cub->img.height = WIN_HEIGHT;
 	cub->img.addr = mlx_get_data_addr(cub->img.img, \
-		&cub->img.b_p_pixel, &cub->img.line_len, &cub->img.endian);
+		&cub->img.bpp, &cub->img.line_len, &cub->img.endian);
 	if (cub->img.addr == NULL)
 	{
 		mlx_destroy_window(cub->mlx, cub->window);

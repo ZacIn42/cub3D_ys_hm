@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:02:48 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/30 09:36:43 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/31 11:14:08 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	skip_texture(t_parse *parse, char **line, int fd, int *count)
 	return ;
 }
 
-void	read_map(char *map, t_field *field, t_parse *parse)
+int	read_map(char *map, t_field *field, t_parse *parse)
 {
 	int		count;
 	int		index;
@@ -62,5 +62,5 @@ void	read_map(char *map, t_field *field, t_parse *parse)
 		free(line);
 	}
 	close(fd);
-	return ;
+	return (0);
 }

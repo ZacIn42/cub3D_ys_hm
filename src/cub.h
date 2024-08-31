@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/30 10:21:47 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/31 11:14:27 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_img {
 	char	*addr;
 	int		width;
 	int		height;
-	int		b_p_pixel;
+	int		bpp;
 	int		line_len;
 	int		endian;
 }	t_img;
@@ -148,10 +148,10 @@ void	free_str_array(char **str_array);
 
 //functions in parse_file
 char	*get_next_line(int fd);
-void	parse_file(t_field *field, char *filename);
-void	read_map(char *map, t_field *field, t_parse *parse);
-void	check_valid_map(t_field *field, t_parse *parse);
-void	parse_texture(t_field *field, char *filename, t_parse *parse);
+int		parse_file(t_cub *cub, char *filename);
+int		parse_texture(t_field *field, char *map, t_parse *parse);
+int		read_map(char *map, t_field *field, t_parse *parse);
+int		check_valid_map(t_field *field, t_parse *parse);
 void	check_texture_north(t_field *field, char *line, t_parse *parse);
 void	check_texture_sorth(t_field *field, char *line, t_parse *parse);
 void	check_texture_west(t_field *field, char *line, t_parse *parse);
