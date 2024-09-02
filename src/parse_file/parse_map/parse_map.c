@@ -12,34 +12,54 @@
 
 #include "cub.h"
 
-static void	insert_map_tmp(t_field *field, char *line, int *index)
+static int	insert_map_tmp(t_field *field, char *line, int *index)
 {
 	field->map[*index] = ft_strdup(line);
+	if (field->map[*index] == NULL)
+		return (free(line), perror_return_one("failed to allocate memory\n"));
 	(*index)++;
-	return ;
+	return (0);
 }
 
-static void	skip_texture(t_parse *parse, char **line, int fd, int *count)
+static int	skip_texture(t_parse *parse, char **line, int fd, int *count)
 {
 	if (!*line)
-		exit(perror_return_one("Faild to malloc\n"));
+		return (perror_return_one("failed to allocate memory\n"));
 	while (*count < parse->texture_height)
 	{
 		*line = get_next_line(fd);
 		if (!*line)
-			exit(perror_return_one("Failed to malloc\n"));
+			return (perror_return_one("failed to allocate memory\n"));
 		free(line);
 		(*count)++;
 	}
 	*line = get_next_line(fd);
+	if (!*line)
+		return (perror_return_one("failed to allocate memory\n"));
 	while (*line && **line == '\0')
 	{
 		free(*line);
 		*line = get_next_line(fd);
+		if (!*line)
+			return (perror_return_one("failed to allocate memory\n"));
 	}
 	if (*line == NULL)
-		exit(perror_return_one("Failed to malloc\n"));
-	return ;
+		return (perror_return_one("failed to allocate memory\n\n"));
+	return (0);
+}
+
+static int gnl_insert_map(t_field *field, char *line, int *index, int fd)
+{
+	while (line)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		if (insert_map_tmp(field, line, index) == 1)
+			return (1);
+		free(line);
+	}
+	return (0);
 }
 
 int	read_map(char *map, t_field *field, t_parse *parse)
@@ -53,22 +73,21 @@ int	read_map(char *map, t_field *field, t_parse *parse)
 	count = 0;
 	fd = open(map, O_RDONLY);
 	if (fd == -1)
-		return (perror_return_one("failed open file"));
+		return (perror_return_one("failed to close map file"));
 	field->map = (char **)ft_calloc(sizeof(char *), parse->height + 1);
+	if (field->map == NULL)
+		return (perror_return_one("failed to allocate memory\n"));
 	line = get_next_line(fd);
 	if (line == NULL)
-		return (perror_return_one("failed read fail"));
-	skip_texture(parse, &line, fd, &count);
-	insert_map_tmp(field, line, &index);
+		return (free(field->map), perror_return_one("failed read fail"));
+	if (skip_texture(parse, &line, fd, &count) == 1)
+		return (free(field->map), 1);
+	if (insert_map_tmp(field, line, &index) == 1)
+		return (free(field->map), 1);
 	free(line);
-	while (line)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		insert_map_tmp(field, line, &index);
-		free(line);
-	}
-	close(fd);
+	if (gnl_insert_map(field, line, &index, fd) == 1)
+		return (free_str_array(field->map), 1);
+	if (close(fd) == -1)
+		return (free_str_array(field->map), perror_return_one("failed to close map file"));
 	return (0);
 }

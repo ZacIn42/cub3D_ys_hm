@@ -23,7 +23,7 @@ int	parse_file(t_cub *cub, char *filename)
 	if (read_map(filename, field, &parse) != 0)
 		return (1);
 	if (check_valid_map(field, &parse) != 0)
-		return (1);
+		return (free_str_array(field->map), 1);
 	if (init_textures(cub->mlx, field) != 0)
 	{
 		free_str_array(field->map);

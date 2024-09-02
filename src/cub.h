@@ -147,23 +147,25 @@ int		perror_return_one(char *error_message);
 void	free_str_array(char **str_array);
 
 //functions in parse_file
-char	*get_next_line(int fd);
-int		parse_file(t_cub *cub, char *filename);
+//functions in parse_texture
 int		parse_texture(t_field *field, char *map, t_parse *parse);
+int		check_texture_north(t_field *field, char *line, t_parse *parse);
+int		check_texture_sorth(t_field *field, char *line, t_parse *parse);
+int		check_texture_west(t_field *field, char *line, t_parse *parse);
+int		check_texture_east(t_field *field, char *line, t_parse *parse);
+int		check_texture_ceiling(t_field *field, char *line, t_parse *parse);
+int		check_texture_floor(t_field *field, char *line, t_parse *parse);
+int		check_valid_texture_map(char **new_line, t_parse *parse, int fd);
+
+//functions in parse_map
+int		parse_file(t_cub *cub, char *filename);
 int		read_map(char *map, t_field *field, t_parse *parse);
 int		check_valid_map(t_field *field, t_parse *parse);
-void	check_texture_north(t_field *field, char *line, t_parse *parse);
-void	check_texture_sorth(t_field *field, char *line, t_parse *parse);
-void	check_texture_west(t_field *field, char *line, t_parse *parse);
-void	check_texture_east(t_field *field, char *line, t_parse *parse);
-void	check_texture_ceiling(t_field *field, char *line, t_parse *parse);
-void	check_texture_floor(t_field *field, char *line, t_parse *parse);
 
 //functions in utils of parse_file
 bool	check_space(t_field *field, t_parse *parse);
 bool	check_first_pos(t_field *field, int yi, int xi);
 bool	check_wall(t_field *field, t_parse *parse);
-void	check_height(t_parse *parse);
-void	check_texture_flag(t_parse *parse);
+char	*get_next_line(int fd);
 
 #endif
