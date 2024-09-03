@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 12:46:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/09/03 20:44:47 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/09/03 21:18:10 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static bool	is_block(char **map, t_vec *current_ray, double theta)
 	{
 		x = (int)current_ray->x;
 		if (cos(theta) <= 0)
-			x = (int)current_ray->x - 2;
+			x = (int)current_ray->x - 1;
 		y = (int)current_ray->y;
 		if (current_ray->y == (int)current_ray->y && \
 					map[(int)current_ray->y - 1][x] == '1')
@@ -111,10 +111,10 @@ static bool	is_block(char **map, t_vec *current_ray, double theta)
 	{
 		y = (int)current_ray->y;
 		if (sin(theta) <= 0)
-			y = (int)current_ray->y - 2;
+			y = (int)current_ray->y - 1;
 		x = (int)current_ray->x;
 		if (current_ray->x == (int)current_ray->x && \
-					map[y][(int)current_ray->y - 1] == '1')
+					map[y][(int)current_ray->x - 1] == '1')
 			return (true);
 	}
 	return (map[y][x] == '1');
