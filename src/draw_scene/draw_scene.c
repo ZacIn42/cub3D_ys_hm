@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 15:44:42 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/29 17:29:04 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/09/03 20:04:51 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	draw_scene(t_cub *cub, t_field *field)
 	t_vec	*spot;
 	int		x;
 
+	printf("%f, %f\n", field->user.pos.x, field->user.pos.y);
 	if (refresh_image(&cub->img, field->c_color, field->f_color) != 0)
 		return (1);
 	view_angle = M_PI * 2 / 3;
