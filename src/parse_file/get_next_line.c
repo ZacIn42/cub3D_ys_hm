@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:29:02 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/24 21:03:09 by yususato         ###   ########.fr       */
+/*   Updated: 2024/08/31 10:40:02 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static char	*read_file(int fd, char *buffer, int *flag)
 	byte_size = 1;
 	buf = (char *)ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!buf)
-		exit(0);
+		exit(perror_return_one("failed to allocate memory\n"));
 	while (byte_size > 0)
 	{
 		byte_size = read(fd, buf, BUFFER_SIZE);
@@ -112,7 +112,7 @@ char	*get_next_line(int fd)
 
 	flag = 1;
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-		exit(0);
+		exit(perror_return_one("invalid get_next_line configurations\n"));
 	buffer = read_file(fd, buffer, &flag);
 	if (flag == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:20:05 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/30 09:36:43 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/31 11:14:59 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ static void	is_valid_map_content(t_field *field, t_parse *parse, int *pos_count)
 	}
 }
 
-void	check_valid_map(t_field *field, t_parse *parse)
+int	check_valid_map(t_field *field, t_parse *parse)
 {
 	int	pos_count;
 
@@ -120,5 +120,5 @@ void	check_valid_map(t_field *field, t_parse *parse)
 	check_map(field, parse);
 	field->user.pos.x = (double)parse->pos_x + 0.5;
 	field->user.pos.y = (double)parse->pos_y + 0.5;
-	return ;
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 15:31:19 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/30 09:56:19 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/08/31 10:58:49 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	calc_canvas_index(t_img *canvas, int x, int h, int iter)
 		y = 0;
 	else if (y >= WIN_HEIGHT)
 		y = WIN_HEIGHT - 1;
-	return (y * canvas->line_len + x * (canvas->b_p_pixel / 8));
+	return (y * canvas->line_len + x * (canvas->bpp / 8));
 }
 
 static int	calc_texture_index(t_img *texture, t_vec *spot, int h, int iter)
@@ -65,7 +65,7 @@ static int	calc_texture_index(t_img *texture, t_vec *spot, int h, int iter)
 	else
 		x = texture->width * fabs(spot->x - (int)spot->x);
 	y = texture->height * iter / h;
-	return (y * texture->line_len + x * (texture->b_p_pixel / 8));
+	return (y * texture->line_len + x * (texture->bpp / 8));
 }
 
 static t_img	*set_texture(t_field *field, t_vec *spot)
