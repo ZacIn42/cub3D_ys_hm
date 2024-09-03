@@ -43,9 +43,9 @@ static int	read_texture_content(t_field *field, t_parse *parse \
 		if (*new_line == '\0')
 		{
 			free(new_line);
-			new_line = get_next_line(fd);
-			if (!new_line)
-				return (perror_return_one("missing texture and color\n"));
+			new_line = get_next_line(fd, parse->gnl_flag);
+			if (check_gnl_error(new_line, parse->gnl_flag, "missing texture and color\n") == 1)
+				return (1);
 			continue ;
 		}
 		count++;
@@ -54,9 +54,9 @@ static int	read_texture_content(t_field *field, t_parse *parse \
 		free(new_line);
 		if (count == 6)
 			break ;
-		new_line = get_next_line(fd);
-		if (!new_line)
-			return (perror_return_one("missing texture and color\n"));
+		new_line = get_next_line(fd, parse->gnl_flag);
+		if (check_gnl_error(new_line, parse->gnl_flag, "missing texture and color\n") == 1)
+			return (1);
 	}
 	return (0);
 }
@@ -69,9 +69,9 @@ int	parse_texture(t_field *field, char *map, t_parse *parse)
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
 		return (perror(map), perror_return_one("failed to open map file\n"));
-	new_line = get_next_line(fd);
-	if (new_line == NULL)
-		return (perror_return_one("file is empty\n"));
+	new_line = get_next_line(fd, parse->gnl_flag);
+	if (check_gnl_error(new_line, parse->gnl_flag, "failed to allocate memory\n") == 1)
+		return (1);
 	if (read_texture_content(field, parse, new_line, fd) == 1)
 		return (1);
 	parse->texture_height = 0;

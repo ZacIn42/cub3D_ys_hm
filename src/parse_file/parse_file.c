@@ -12,12 +12,25 @@
 
 #include "cub.h"
 
+static void	parse_init(t_parse *parse)
+{
+	parse->north_flag = false;
+	parse->sorth_flag = false;
+	parse->west_flag = false;
+	parse->east_flag = false;
+	parse->ceiling_flag = false;
+	parse->floor_flag = false;
+	parse->gnl_flag = false;
+	return ;
+}
+
 int	parse_file(t_cub *cub, char *filename)
 {
 	t_field	*field;
 	t_parse	parse;
 
 	field = cub->field;
+	parse_init(&parse);
 	if (parse_texture(field, filename, &parse) != 0)
 		return (1);
 	if (read_map(filename, field, &parse) != 0)

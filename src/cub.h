@@ -96,6 +96,7 @@ typedef struct s_parse {
 	bool	east_flag;
 	bool	ceiling_flag;
 	bool	floor_flag;
+	bool	gnl_flag;
 }	t_parse;
 
 enum {
@@ -166,6 +167,8 @@ int		check_valid_map(t_field *field, t_parse *parse);
 bool	check_space(t_field *field, t_parse *parse);
 bool	check_first_pos(t_field *field, int yi, int xi);
 bool	check_wall(t_field *field, t_parse *parse);
-char	*get_next_line(int fd);
+char	*get_next_line(int fd, bool gnl_flag);
+void	gnl_error(bool gnl_flag, char *error_message);
+int		check_gnl_error(char *line, bool gnl_flag, char *message);
 
 #endif

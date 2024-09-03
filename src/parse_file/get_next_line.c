@@ -12,7 +12,7 @@
 
 #include "cub.h"
 
-static char	*line_next(char *buffer, char *line)
+static char	*line_next(char *buffer, bool gnl_flag)
 {
 	size_t	i;
 	size_t	j;
@@ -31,7 +31,7 @@ static char	*line_next(char *buffer, char *line)
 	if (!tmp)
 	{
 		free(buffer);
-		return (line);
+		return (gnl_error(gnl_flag, "failed to allocate memory\n"), NULL);
 	}
 	i++;
 	while (buffer[i])
@@ -40,7 +40,7 @@ static char	*line_next(char *buffer, char *line)
 	return (tmp);
 }
 
-static char	*output(char *buffer)
+static char	*output(char *buffer, bool gnl_flag)
 {
 	char	*line;
 	size_t	i;
@@ -54,7 +54,7 @@ static char	*output(char *buffer)
 	if (!line)
 	{
 		free(buffer);
-		return (NULL);
+		return (gnl_error(gnl_flag, "failed to allocate memory\n"), NULL);
 	}
 	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
@@ -67,16 +67,18 @@ static char	*output(char *buffer)
 	return (line);
 }
 
-static char	*unit(char *buffer, char *buf)
+static char	*unit(char *buffer, char *buf, bool gnl_flag)
 {
 	char	*temp;
 
 	temp = ft_strjoin(buffer, buf);
+	if (temp == NULL)
+		return (gnl_error(gnl_flag, "failed to allocate memory\n"), NULL);
 	free(buffer);
 	return (temp);
 }
 
-static char	*read_file(int fd, char *buffer, int *flag)
+static char	*read_file(int fd, char *buffer, int *flag, bool gnl_flag)
 {
 	int		byte_size;
 	char	*buf;
@@ -84,7 +86,7 @@ static char	*read_file(int fd, char *buffer, int *flag)
 	byte_size = 1;
 	buf = (char *)ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!buf)
-		exit(perror_return_one("failed to allocate memory\n"));
+		return (gnl_error(gnl_flag, "failed to allocate memory\n"), NULL);
 	while (byte_size > 0)
 	{
 		byte_size = read(fd, buf, BUFFER_SIZE);
@@ -96,7 +98,9 @@ static char	*read_file(int fd, char *buffer, int *flag)
 			return (NULL);
 		}
 		buf[byte_size] = '\0';
-		buffer = unit(buffer, buf);
+		buffer = unit(buffer, buf, gnl_flag);
+		if (buffer == NULL)
+			return (gnl_error(gnl_flag, "failed to allocate memory\n"), NULL);
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
@@ -104,7 +108,7 @@ static char	*read_file(int fd, char *buffer, int *flag)
 	return (buffer);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, bool gnl_flag)
 {
 	static char	*buffer;
 	char		*line;
@@ -112,17 +116,16 @@ char	*get_next_line(int fd)
 
 	flag = 1;
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-		exit(perror_return_one("invalid get_next_line configurations\n"));
-	buffer = read_file(fd, buffer, &flag);
+		return (gnl_error(gnl_flag, "Error read\n"), NULL);
+	buffer = read_file(fd, buffer, &flag, gnl_flag);
 	if (flag == 0)
 	{
 		free(buffer);
-		return (NULL);
+		return (gnl_flag = true, NULL);
 	}
 	if (!buffer)
 		return (NULL);
-	line = output(buffer);
-	buffer = line_next(buffer, line);
-	printf("%p\n",line);
+	line = output(buffer, gnl_flag);
+	buffer = line_next(buffer, gnl_flag);
 	return (line);
 }
