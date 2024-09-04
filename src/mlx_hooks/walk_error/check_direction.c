@@ -21,7 +21,7 @@ bool	check_north(t_user *user, t_field *field)
 	cast_x = (int)user->pos.x;
 	cast_y = (int)user->pos.y;
 	point = user->pos.y - cast_y;
-	if (field->map[cast_y + 1][cast_x] == '1' && point >= 0.9)
+	if (field->map[cast_y - 1][cast_x] == '1' && point <= 0.1)
 		return (false);
 	return (true);
 }
@@ -49,7 +49,7 @@ bool	check_south(t_user *user, t_field *field)
 	cast_x = (int)user->pos.x;
 	cast_y = (int)user->pos.y;
 	point = user->pos.y - cast_y;
-	if (field->map[cast_y - 1][cast_x] == '1' && point <= 0.1)
+	if (field->map[cast_y + 1][cast_x] == '1' && point >= 0.9)
 		return (false);
 	return (true);
 }

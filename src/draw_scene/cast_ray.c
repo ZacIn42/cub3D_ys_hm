@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 12:46:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/30 10:40:25 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/09/03 21:18:10 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 static void	set_next_border(t_vec *current_ray, double theta);
 static void	set_next_x_y(t_vec *current_ray, t_vec *next_x_y, double theta);
 static bool	is_next_x(t_vec *current_ray, t_vec *next_x_y, double theta);
-static bool	is_block(char **map, const t_vec *pos, t_vec *current_ray);
+static bool	is_block(char **map, t_vec *current_ray, double theta);
 
 t_vec	*cast_ray(const t_vec *pos, double theta, char **map)
 {
 	t_vec	*current_ray;
-	t_vec	next_block;
 
 	current_ray = (t_vec *)malloc(sizeof(t_vec));
 	if (current_ray == NULL)
@@ -29,11 +28,10 @@ t_vec	*cast_ray(const t_vec *pos, double theta, char **map)
 		return (NULL);
 	}
 	vec_init(current_ray, pos->x, pos->y);
-	vec_init(&next_block, (int)pos->x, (int)pos->y);
 	while (true)
 	{
 		set_next_border(current_ray, theta);
-		if (is_block(map, pos, current_ray))
+		if (is_block(map, current_ray, theta))
 			break ;
 	}
 	return (current_ray);
@@ -94,18 +92,30 @@ static bool	is_next_x(t_vec *current_ray, t_vec *next_x_y, double theta)
 		return (false);
 }
 
-static bool	is_block(char **map, const t_vec *pos, t_vec *current_ray)
+static bool	is_block(char **map, t_vec *current_ray, double theta)
 {
 	int	x;
 	int	y;
 
-	if (current_ray->x == (int)current_ray->x && current_ray->x < pos->x)
-			x = (int)current_ray->x;
+	if (current_ray->x == (int)current_ray->x)
+	{
+		x = (int)current_ray->x;
+		if (cos(theta) <= 0)
+			x = (int)current_ray->x - 1;
+		y = (int)current_ray->y;
+		if (current_ray->y == (int)current_ray->y && \
+					map[(int)current_ray->y - 1][x] == '1')
+			return (true);
+	}
 	else
-		x = (int)current_ray->x + 1;
-	if (current_ray->y == (int)current_ray->y && current_ray->y < pos->y)
-			y = (int)current_ray->y;
-	else
-		y = (int)current_ray->y + 1;
+	{
+		y = (int)current_ray->y;
+		if (sin(theta) <= 0)
+			y = (int)current_ray->y - 1;
+		x = (int)current_ray->x;
+		if (current_ray->x == (int)current_ray->x && \
+					map[y][(int)current_ray->x - 1] == '1')
+			return (true);
+	}
 	return (map[y][x] == '1');
 }
