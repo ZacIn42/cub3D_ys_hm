@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/09/07 09:39:08 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/09/07 11:28:43 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define WIN_HEIGHT (768)
 # define WIN_WIDTH (768)
 # define MAX_SIZE (1024)
+# define FUDGE_FACTOR (0.0001)
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE (20)
