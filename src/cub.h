@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/31 11:28:29 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/09/07 09:39:08 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 # include <string.h>
 # include <stdint.h>
 
-# define WIN_HEIGHT (1024)
-# define WIN_WIDTH (1024)
+# define WIN_HEIGHT (768)
+# define WIN_WIDTH (768)
 # define MAX_SIZE (1024)
 
 # ifndef BUFFER_SIZE
