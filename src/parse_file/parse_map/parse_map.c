@@ -3,64 +3,96 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:02:48 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/31 11:14:08 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/09/08 14:11:10 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static void	insert_map_tmp(t_field *field, char *line, int *index)
+static int	insert_map_tmp(t_field *field, char *line, int *index)
 {
 	field->map[*index] = ft_strdup(line);
+	if (field->map[*index] == NULL)
+		return (perror_return_one("failed to allocate memory\n"));
 	(*index)++;
-	return ;
+	return (0);
 }
 
-static void	skip_texture(t_parse *parse, char **line, int fd, int *count)
+static int	skip_texture(t_parse *parse, char **line, int fd, int *count)
 {
-	if (!*line)
-		exit(perror_return_one("Faild to malloc\n"));
+	*count = 1;
+	free(*line);
 	while (*count < parse->texture_height)
 	{
-		*line = get_next_line(fd);
-		if (!*line)
-			exit(perror_return_one("Failed to malloc\n"));
-		free(line);
+		*line = get_next_line(fd, &(parse->gnl_flag));
+		if (check_gnl_error(*line, parse->gnl_flag, init_error(1)) == 1)
+			return (1);
+		free(*line);
 		(*count)++;
 	}
-	while ((*line = get_next_line(fd)) != NULL && **line == '\0')
+	*line = get_next_line(fd, &(parse->gnl_flag));
+	if (check_gnl_error(*line, parse->gnl_flag, init_error(1)) == 1)
+		return (1);
+	while (*line && **line == '\0')
+	{
+		free(*line);
+		*line = get_next_line(fd, &(parse->gnl_flag));
+		if (check_gnl_error(*line, parse->gnl_flag, init_error(1)) == 1)
+			return (1);
+	}
+	if (check_gnl_error(*line, parse->gnl_flag, init_error(1)) == 1)
+		return (1);
+	return (0);
+}
+
+static int	gnl_insert_map(t_field *field, \
+					t_parse *parse, char *line, int fd)
+{
+	int	index;
+
+	index = 0;
+	if (insert_map_tmp(field, line, &index) == 1)
+		return (free(line), 1);
+	free(line);
+	while (index < parse->height)
+	{
+		line = get_next_line(fd, &(parse->gnl_flag));
+		if (check_gnl_error(line, parse->gnl_flag, NULL) == 1)
+			return (1);
+		if (line == NULL)
+			break ;
+		if (insert_map_tmp(field, line, &index) == 1)
+			return (free(line), 1);
 		free(line);
-	if (*line == NULL)
-		exit(perror_return_one("Failed to malloc\n"));
-	return ;
+	}
+	return (0);
 }
 
 int	read_map(char *map, t_field *field, t_parse *parse)
 {
 	int		count;
-	int		index;
 	int		fd;
 	char	*line;
 
-	index = 0;
 	count = 0;
 	fd = open(map, O_RDONLY);
+	if (fd == -1)
+		return (perror_return_one("failed to close map file"));
 	field->map = (char **)ft_calloc(sizeof(char *), parse->height + 1);
-	line = get_next_line(fd);
-	skip_texture(parse, &line, fd, &count);
-	insert_map_tmp(field, line, &index);
-	free(line);
-	while (line)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		insert_map_tmp(field, line, &index);
-		free(line);
-	}
-	close(fd);
+	if (field->map == NULL)
+		return (perror_return_one("failed to allocate memory\n"));
+	line = get_next_line(fd, &(parse->gnl_flag));
+	if (check_gnl_error(line, parse->gnl_flag, "failed read fail\n") == 1)
+		return (1);
+	if (skip_texture(parse, &line, fd, &count) == 1)
+		return (free(field->map), 1);
+	if (gnl_insert_map(field, parse, line, fd) == 1)
+		return (free_str_array(field->map), 1);
+	if (close(fd) == -1)
+		return (free_str_array(field->map), \
+		perror_return_one("failed to close map file"));
 	return (0);
 }

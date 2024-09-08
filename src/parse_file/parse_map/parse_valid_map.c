@@ -6,13 +6,13 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:20:05 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/31 11:14:59 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/09/08 14:34:51 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-void	can_pass(t_field *field, t_parse *parse \
+static int	can_pass(t_field *field, t_parse *parse \
 				, t_vec *stack, bool visited[MAX_SIZE][MAX_SIZE])
 {
 	t_vec	next;
@@ -22,20 +22,20 @@ void	can_pass(t_field *field, t_parse *parse \
 	if (visited[parse->yi][parse->xi] == false
 		&& check_space(field, parse))
 	{
-		if (parse->yi == 0 || parse->yi == parse->height - 1\
+		if (parse->yi == 0 || parse->yi == parse->height - 1 \
 			|| parse->xi == 0 \
 			|| parse->xi == (int)ft_strlen(field->map[parse->yi -1]) - 1)
-				exit(0);
+			return (perror_return_one("Map is not surrounded by walls\n"));
 		if (check_wall(field, parse) == false)
-			exit(perror_return_one("Map is not surrounded by walls\n"));
+			return (perror_return_one("Map is not surrounded by walls\n"));
 		parse->top++;
 		visited[parse->yi][parse->xi] = true;
 		stack[parse->top] = next;
 	}
-	return ;
+	return (0);
 }
 
-static bool	pass_find(t_field *field, t_parse *parse \
+static int	pass_find(t_field *field, t_parse *parse \
 						, t_vec *stack, bool visited[MAX_SIZE][MAX_SIZE])
 {
 	int			i;
@@ -52,14 +52,15 @@ static bool	pass_find(t_field *field, t_parse *parse \
 		{
 			parse->xi = cur.x + dx[i];
 			parse->yi = cur.y + dy[i];
-			can_pass(field, parse, stack, visited);
+			if (can_pass(field, parse, stack, visited) == 1)
+				return (1);
 			i++;
 		}
 	}
-	return (true);
+	return (0);
 }
 
-static void	check_map(t_field *field, t_parse *parse)
+static int	check_map(t_field *field, t_parse *parse)
 {
 	t_vec	stack[MAX_SIZE];
 	t_vec	node;
@@ -77,11 +78,12 @@ static void	check_map(t_field *field, t_parse *parse)
 	node.y = parse->pos_y;
 	stack[parse->top] = node;
 	visited[parse->pos_y][parse->pos_x] = true;
-	if (!pass_find(field, parse, stack, visited))
-		exit(perror_return_one("Map is not surrounded by walls\n"));
+	if (pass_find(field, parse, stack, visited) == 1)
+		return (1);
+	return (0);
 }
 
-static void	is_valid_map_content(t_field *field, t_parse *parse, int *pos_count)
+static int	is_valid_map_content(t_field *field, t_parse *parse, int *pos_count)
 {
 	int	height;
 	int	width;
@@ -101,12 +103,13 @@ static void	is_valid_map_content(t_field *field, t_parse *parse, int *pos_count)
 			else if (field->map[height][width] != '1' \
 				&& field->map[height][width] != '0' \
 				&& field->map[height][width] != ' ')
-				exit(perror_return_one("Invalid map\n"));
+				return (perror_return_one("Invalid map\n"));
 			width++;
 		}
 		width = 0;
 		height++;
 	}
+	return (0);
 }
 
 int	check_valid_map(t_field *field, t_parse *parse)
@@ -114,10 +117,12 @@ int	check_valid_map(t_field *field, t_parse *parse)
 	int	pos_count;
 
 	pos_count = 0;
-	is_valid_map_content(field, parse, &pos_count);
+	if (is_valid_map_content(field, parse, &pos_count) == 1)
+		return (1);
 	if (pos_count != 1)
-		exit(perror_return_one("many player\n"));
-	check_map(field, parse);
+		return (perror_return_one("invalid number of players\n"));
+	if (check_map(field, parse) == 1)
+		return (1);
 	field->user.pos.x = (double)parse->pos_x + 0.5;
 	field->user.pos.y = (double)parse->pos_y + 0.5;
 	return (0);

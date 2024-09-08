@@ -6,7 +6,7 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:05:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/09/03 21:35:43 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/09/08 15:03:22 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ int	main(int argc, char *argv[])
 	mlx_loop(cub.mlx);
 	exit(0);
 }
+// __attribute((destructor)) static void destructor()
+// {
+//     system("leaks -q cub3D");
+// }
 
 static bool	check_file(char *filename)
 {
