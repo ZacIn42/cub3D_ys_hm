@@ -3,18 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yususato <yususato@student.42.fr>          +#+  +:+       +#+         #
+#    By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/19 16:12:07 by yususato          #+#    #+#              #
-#    Updated: 2023/12/15 13:38:52 by yususato         ###   ########.fr        #
+#    Updated: 2024/09/08 14:30:30 by hmiyazak         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME = libft.a
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I$(INCL)
-INCL = libft.h
+CFLAGS = -Wall -Wextra -Werror
 SRCS = ft_atoi.c \
 	ft_bzero.c \
 	ft_calloc.c \
@@ -67,15 +66,6 @@ SRCS += ./ft_printf.c \
 OBJS += ./ft_printf.o \
 		./ft_printf_uni.o \
 		./printf_tool.o
-INCL += -Ift_printf.h
-
-# SRCS += ./gnl/get_next_line_utils.c \
-# 		./gnl/get_next_line_main.c \
-# 		./gnl/kusottare.c
-# OBJS += ./gnl/get_next_line_utils.o \
-# 		./gnl/get_next_line_main.o \
-# 		./gnl/kusottare.o
-# INCL += -Iget_next_line.h
 
 all: $(NAME)
 
