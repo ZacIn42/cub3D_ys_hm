@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/09/08 13:04:00 by yususato         ###   ########.fr       */
+/*   Updated: 2024/09/08 14:18:13 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@
 # include <string.h>
 # include <stdint.h>
 
-# define WIN_HEIGHT (1024)
-# define WIN_WIDTH (1024)
+# define WIN_HEIGHT (768)
+# define WIN_WIDTH (768)
 # define MAX_SIZE (1024)
+# define FUDGE_FACTOR (0.0001)
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE (20)

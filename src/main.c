@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:05:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/31 18:12:44 by yususato         ###   ########.fr       */
+/*   Updated: 2024/09/08 14:18:57 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,6 @@ int	main(int argc, char *argv[])
 	t_field		field;
 	t_cub		cub;
 
-	// int fd = open("test", O_RDONLY);
-	// printf("%s\n",get_next_line(fd));
-	// printf("%s\n",get_next_line(fd));
-
-	// write(1,"a\n",2);
-	
-	// close(fd);
-	// return(0);
 	if (argc != 2 || check_file(argv[1]) == false)
 		exit(perror_return_one("argument should be a readable file, *.cub\n"));
 	if (init_cub(&cub, &field) != 0)

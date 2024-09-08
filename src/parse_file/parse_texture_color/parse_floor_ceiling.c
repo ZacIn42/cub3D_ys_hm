@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 16:13:01 by yususato          #+#    #+#             */
-/*   Updated: 2024/09/08 11:34:43 by yususato         ###   ########.fr       */
+/*   Updated: 2024/09/08 14:16:45 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static unsigned int	is_valid_ceiling_extension(char *line \
 		while (line[*index + *count] && ft_isdigit(line[*index + *count]))
 			(*count)++;
 		color_value = ft_substr(line, *index, *count);
-		if (ft_atoi(color_value) < 0 || ft_atoi(color_value) > 255)
+		if (check_valid_ft_atoi(color_value) == 1)
 			return (perror_return_one("ceiling argument is invalid\n"));
 		if (*flag >= 3)
 			return (perror_return_one("ceiling argument is invalid\n"));

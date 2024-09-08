@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/08 11:32:22 by yususato          #+#    #+#             */
-/*   Updated: 2024/09/08 13:47:39 by yususato         ###   ########.fr       */
+/*   Updated: 2024/09/08 14:21:25 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ int	check_valid_ft_atoi(char *color_value)
 	{
 		if (ft_isdigit(color_value[index]))
 			break ;
+		index++;
 	}
 	if (color_value[index] && color_value[index] == '0')
 	{
-		if (color_value[index + 1] && color_value[index + 1] == '0')
+		if (color_value[index + 1] && ft_isdigit(color_value[index]))
 			return (1);
 	}
 	if (ft_atoi(color_value) < 0 || ft_atoi(color_value) > 255)
