@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:05:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/09/08 14:18:57 by yususato         ###   ########.fr       */
+/*   Updated: 2024/09/08 15:03:22 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ int	main(int argc, char *argv[])
 	mlx_loop(cub.mlx);
 	exit(0);
 }
+// __attribute((destructor)) static void destructor()
+// {
+//     system("leaks -q cub3D");
+// }
 
 static bool	check_file(char *filename)
 {
