@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 16:05:46 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/27 11:42:32 by yususato         ###   ########.fr       */
+/*   Updated: 2024/09/08 16:48:19 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	check_texture_sorth(t_field *field, char *line, t_parse *parse)
 	if (ft_strncmp(&line[index], "./", 2) != 0)
 		return (perror_return_one("south argument is invalid\n"));
 	index += 2;
-	file = strchr(&line[index], '.');
+	file = ft_strchr(&line[index], '.');
 	if (ft_strncmp(file, ".xpm\0", 5) != 0)
 		return (perror_return_one("south argument is invalid\n"));
 	ft_strlcpy(field->texture_paths[SOUTH], &line[path_start_index] \
@@ -81,7 +81,7 @@ int	check_texture_west(t_field *field, char *line, t_parse *parse)
 	if (ft_strncmp(&line[index], "./", 2) != 0)
 		return (perror_return_one("west argument is invalid\n"));
 	index += 2;
-	file = strchr(&line[index], '.');
+	file = ft_strchr(&line[index], '.');
 	if (ft_strncmp(file, ".xpm\0", 5) != 0)
 		return (perror_return_one("west argument is invalid\n"));
 	ft_strlcpy(field->texture_paths[WEST], &line[path_start_index] \
@@ -107,7 +107,7 @@ int	check_texture_east(t_field *field, char *line, t_parse *parse)
 	if (ft_strncmp(&line[index], "./", 2) != 0)
 		return (perror_return_one("east argument is invalid\n"));
 	index += 2;
-	file = strchr(&line[index], '.');
+	file = ft_strchr(&line[index], '.');
 	if (ft_strncmp(file, ".xpm\0", 5) != 0)
 		return (perror_return_one("east argument is invalid\n"));
 	ft_strlcpy(field->texture_paths[EAST], &line[path_start_index] \

@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 16:13:01 by yususato          #+#    #+#             */
-/*   Updated: 2024/09/08 14:16:45 by yususato         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:08:29 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ static unsigned int	is_valid_ceiling_extension(char *line \
 		color_value = ft_substr(line, *index, *count);
 		if (check_valid_ft_atoi(color_value) == 1)
 			return (perror_return_one("ceiling argument is invalid\n"));
-		if (*flag >= 3)
-			return (perror_return_one("ceiling argument is invalid\n"));
 		set_color(&color, ft_atoi(color_value), flag);
 		(*index) += *count;
 		free(color_value);
-		if (line[*index] != ',' && line[*index] != '\0')
+		if (line[*index] && *flag >= 2 && line[*index] != '\0')
+			return (perror_return_one("ceiling argument is invalid\n"));
+		if (line[*index] && line[*index] != ',' && line[*index] != '\0')
 			return (perror_return_one("ceiling argument is invalid\n"));
 		(*index)++;
 		*count = 0;
@@ -69,12 +69,12 @@ static unsigned int	is_valid_floor_extension(char *line \
 		color_value = ft_substr(line, *index, *count);
 		if (check_valid_ft_atoi(color_value) == 1)
 			return (perror_return_one("floor argument is invalid\n"));
-		if (*flag >= 3)
-			return (perror_return_one("floor argument is invalid\n"));
 		set_color(&color, ft_atoi(color_value), flag);
 		*index += *count;
 		free(color_value);
-		if (line[*index] != ',' && line[*index] != '\0')
+		if (line[*index] && *flag >= 2 && line[*index] != '\0')
+			return (perror_return_one("floor argument is invalid\n"));
+		if (line[*index] && line[*index] != ',' && line[*index] != '\0')
 			return (perror_return_one("floor argument is invalid\n"));
 		(*index)++;
 		*count = 0;
@@ -92,7 +92,7 @@ int	check_texture_ceiling(t_field *field, char *line, t_parse *parse)
 	index = 0;
 	count = 0;
 	flag = 0;
-	if (strncmp(line, "C ", 1) != 0)
+	if (ft_strncmp(line, "C ", 1) != 0)
 		return (perror_return_one("ceiling argument is invalid\n"));
 	index++;
 	while (line[index] && line[index] == ' ')
@@ -113,7 +113,7 @@ int	check_texture_floor(t_field *field, char *line, t_parse *parse)
 	index = 0;
 	count = 0;
 	flag = 0;
-	if (strncmp(line, "F", 1) != 0)
+	if (ft_strncmp(line, "F", 1) != 0)
 		return (perror_return_one("floor argument is invalid\n"));
 	index++;
 	while (line[index] && line[index] == ' ')
