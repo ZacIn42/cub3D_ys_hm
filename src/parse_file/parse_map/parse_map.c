@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:02:48 by yususato          #+#    #+#             */
-/*   Updated: 2024/09/08 13:35:40 by yususato         ###   ########.fr       */
+/*   Updated: 2024/09/08 14:11:10 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ static int	insert_map_tmp(t_field *field, char *line, int *index)
 static int	skip_texture(t_parse *parse, char **line, int fd, int *count)
 {
 	*count = 1;
-	free(line);
+	free(*line);
 	while (*count < parse->texture_height)
 	{
 		*line = get_next_line(fd, &(parse->gnl_flag));
 		if (check_gnl_error(*line, parse->gnl_flag, init_error(1)) == 1)
 			return (1);
-		free(line);
+		free(*line);
 		(*count)++;
 	}
 	*line = get_next_line(fd, &(parse->gnl_flag));
