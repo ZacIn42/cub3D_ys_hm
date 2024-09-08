@@ -6,13 +6,13 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:29:02 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/31 18:10:33 by yususato         ###   ########.fr       */
+/*   Updated: 2024/09/08 11:56:44 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-static char	*line_next(char *buffer, bool gnl_flag)
+static char	*line_next(char *buffer, bool *gnl_flag)
 {
 	size_t	i;
 	size_t	j;
@@ -40,7 +40,7 @@ static char	*line_next(char *buffer, bool gnl_flag)
 	return (tmp);
 }
 
-static char	*output(char *buffer, bool gnl_flag)
+static char	*output(char *buffer, bool *gnl_flag)
 {
 	char	*line;
 	size_t	i;
@@ -67,7 +67,7 @@ static char	*output(char *buffer, bool gnl_flag)
 	return (line);
 }
 
-static char	*unit(char *buffer, char *buf, bool gnl_flag)
+static char	*unit(char *buffer, char *buf, bool *gnl_flag)
 {
 	char	*temp;
 
@@ -78,7 +78,7 @@ static char	*unit(char *buffer, char *buf, bool gnl_flag)
 	return (temp);
 }
 
-static char	*read_file(int fd, char *buffer, int *flag, bool gnl_flag)
+static char	*read_file(int fd, char *buffer, int *flag, bool *gnl_flag)
 {
 	int		byte_size;
 	char	*buf;
@@ -92,10 +92,8 @@ static char	*read_file(int fd, char *buffer, int *flag, bool gnl_flag)
 		byte_size = read(fd, buf, BUFFER_SIZE);
 		if (byte_size == -1)
 		{
-			*flag = 0;
 			free(buf);
-			buf = NULL;
-			return (NULL);
+			return (*flag = 0, NULL);
 		}
 		buf[byte_size] = '\0';
 		buffer = unit(buffer, buf, gnl_flag);
@@ -108,7 +106,7 @@ static char	*read_file(int fd, char *buffer, int *flag, bool gnl_flag)
 	return (buffer);
 }
 
-char	*get_next_line(int fd, bool gnl_flag)
+char	*get_next_line(int fd, bool *gnl_flag)
 {
 	static char	*buffer;
 	char		*line;
@@ -121,7 +119,7 @@ char	*get_next_line(int fd, bool gnl_flag)
 	if (flag == 0)
 	{
 		free(buffer);
-		return (gnl_flag = true, NULL);
+		return (gnl_error(gnl_flag, "Error read\n"), NULL);
 	}
 	if (!buffer)
 		return (NULL);

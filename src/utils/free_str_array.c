@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_str_array.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 08:58:04 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/24 20:35:09 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/09/08 13:40:10 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_str_array(char **str_array)
 	index = 0;
 	if (str_array == NULL)
 		return ;
-	while (str_array[index] != NULL)
+	while (str_array[index])
 	{
 		free(str_array[index]);
 		index++;

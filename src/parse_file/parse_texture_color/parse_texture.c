@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 15:32:52 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/31 18:17:50 by yususato         ###   ########.fr       */
+/*   Updated: 2024/09/08 12:58:53 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ static int	read_texture_content(t_field *field, t_parse *parse \
 		if (*new_line == '\0')
 		{
 			free(new_line);
-			new_line = get_next_line(fd, parse->gnl_flag);
-			if (check_gnl_error(new_line, parse->gnl_flag, "missing texture and color\n") == 1)
+			new_line = get_next_line(fd, &(parse->gnl_flag));
+			if (check_gnl_error(new_line, parse->gnl_flag, init_error(2)) == 1)
 				return (1);
 			continue ;
 		}
@@ -54,8 +54,8 @@ static int	read_texture_content(t_field *field, t_parse *parse \
 		free(new_line);
 		if (count == 6)
 			break ;
-		new_line = get_next_line(fd, parse->gnl_flag);
-		if (check_gnl_error(new_line, parse->gnl_flag, "missing texture and color\n") == 1)
+		new_line = get_next_line(fd, &(parse->gnl_flag));
+		if (check_gnl_error(new_line, parse->gnl_flag, init_error(2)) == 1)
 			return (1);
 	}
 	return (0);
@@ -69,12 +69,12 @@ int	parse_texture(t_field *field, char *map, t_parse *parse)
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
 		return (perror(map), perror_return_one("failed to open map file\n"));
-	new_line = get_next_line(fd, parse->gnl_flag);
-	if (check_gnl_error(new_line, parse->gnl_flag, "failed to allocate memory\n") == 1)
-		return (1);
-	if (read_texture_content(field, parse, new_line, fd) == 1)
+	new_line = get_next_line(fd, &(parse->gnl_flag));
+	if (check_gnl_error(new_line, parse->gnl_flag, init_error(1)) == 1)
 		return (1);
 	parse->texture_height = 0;
+	if (read_texture_content(field, parse, new_line, fd) == 1)
+		return (1);
 	if (check_valid_texture_map(&new_line, parse, fd) != 0)
 		return (1);
 	if (close(fd) != 0)

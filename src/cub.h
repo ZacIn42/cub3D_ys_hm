@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/08/31 11:28:29 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/09/08 13:04:00 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,10 @@ int		check_valid_map(t_field *field, t_parse *parse);
 bool	check_space(t_field *field, t_parse *parse);
 bool	check_first_pos(t_field *field, int yi, int xi);
 bool	check_wall(t_field *field, t_parse *parse);
-char	*get_next_line(int fd, bool gnl_flag);
-void	gnl_error(bool gnl_flag, char *error_message);
+char	*get_next_line(int fd, bool *gnl_flag);
+void	gnl_error(bool *gnl_flag, char *error_message);
 int		check_gnl_error(char *line, bool gnl_flag, char *message);
+int		check_valid_ft_atoi(char *color_value);
+char	*init_error(int number);
 
 #endif

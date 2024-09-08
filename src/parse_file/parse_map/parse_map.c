@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 14:02:48 by yususato          #+#    #+#             */
-/*   Updated: 2024/08/31 18:30:39 by yususato         ###   ########.fr       */
+/*   Updated: 2024/09/08 13:35:40 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,28 +27,29 @@ static int	skip_texture(t_parse *parse, char **line, int fd, int *count)
 	free(line);
 	while (*count < parse->texture_height)
 	{
-		*line = get_next_line(fd, parse->gnl_flag);
-		if (check_gnl_error(*line, parse->gnl_flag, "failed to allocate memory\n") == 1)
+		*line = get_next_line(fd, &(parse->gnl_flag));
+		if (check_gnl_error(*line, parse->gnl_flag, init_error(1)) == 1)
 			return (1);
 		free(line);
 		(*count)++;
 	}
-	*line = get_next_line(fd, parse->gnl_flag);
-	if (check_gnl_error(*line, parse->gnl_flag, "failed to allocate memory\n") == 1)
+	*line = get_next_line(fd, &(parse->gnl_flag));
+	if (check_gnl_error(*line, parse->gnl_flag, init_error(1)) == 1)
 		return (1);
 	while (*line && **line == '\0')
 	{
 		free(*line);
-		*line = get_next_line(fd, parse->gnl_flag);
-		if (check_gnl_error(*line, parse->gnl_flag, "failed to allocate memory\n") == 1)
+		*line = get_next_line(fd, &(parse->gnl_flag));
+		if (check_gnl_error(*line, parse->gnl_flag, init_error(1)) == 1)
 			return (1);
 	}
-	if (check_gnl_error(*line, parse->gnl_flag, "failed to allocate memory\n") == 1)
+	if (check_gnl_error(*line, parse->gnl_flag, init_error(1)) == 1)
 		return (1);
 	return (0);
 }
 
-static int gnl_insert_map(t_field *field, t_parse *parse, char *line, int fd)
+static int	gnl_insert_map(t_field *field, \
+					t_parse *parse, char *line, int fd)
 {
 	int	index;
 
@@ -56,11 +57,13 @@ static int gnl_insert_map(t_field *field, t_parse *parse, char *line, int fd)
 	if (insert_map_tmp(field, line, &index) == 1)
 		return (free(line), 1);
 	free(line);
-	while (line)
+	while (index < parse->height)
 	{
-		line = get_next_line(fd, parse->gnl_flag);
+		line = get_next_line(fd, &(parse->gnl_flag));
 		if (check_gnl_error(line, parse->gnl_flag, NULL) == 1)
 			return (1);
+		if (line == NULL)
+			break ;
 		if (insert_map_tmp(field, line, &index) == 1)
 			return (free(line), 1);
 		free(line);
@@ -81,7 +84,7 @@ int	read_map(char *map, t_field *field, t_parse *parse)
 	field->map = (char **)ft_calloc(sizeof(char *), parse->height + 1);
 	if (field->map == NULL)
 		return (perror_return_one("failed to allocate memory\n"));
-	line = get_next_line(fd, parse->gnl_flag);
+	line = get_next_line(fd, &(parse->gnl_flag));
 	if (check_gnl_error(line, parse->gnl_flag, "failed read fail\n") == 1)
 		return (1);
 	if (skip_texture(parse, &line, fd, &count) == 1)
@@ -89,6 +92,7 @@ int	read_map(char *map, t_field *field, t_parse *parse)
 	if (gnl_insert_map(field, parse, line, fd) == 1)
 		return (free_str_array(field->map), 1);
 	if (close(fd) == -1)
-		return (free_str_array(field->map), perror_return_one("failed to close map file"));
+		return (free_str_array(field->map), \
+		perror_return_one("failed to close map file"));
 	return (0);
 }
