@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_valid_map.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:20:05 by yususato          #+#    #+#             */
-/*   Updated: 2024/09/08 14:34:51 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/09/09 15:08:03 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,14 @@ static int	is_valid_map_content(t_field *field, t_parse *parse, int *pos_count)
 		while (field->map[height][width] && field->map[height][width] != '\0')
 		{
 			if (check_first_pos(field, height, width))
-			{
-				(*pos_count)++;
-				parse->pos_x = width;
-				parse->pos_y = height;
-			}
+				set_position(parse, pos_count, height, width);
 			else if (field->map[height][width] != '1' \
 				&& field->map[height][width] != '0' \
 				&& field->map[height][width] != ' ')
 				return (perror_return_one("Invalid map\n"));
 			width++;
+			if (check_map_size(width, height) == 1)
+				return (perror_return_one("Invalid map size\n"));
 		}
 		width = 0;
 		height++;

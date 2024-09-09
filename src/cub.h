@@ -6,7 +6,7 @@
 /*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:02:06 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/09/08 14:18:13 by yususato         ###   ########.fr       */
+/*   Updated: 2024/09/09 15:09:22 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,7 @@ void	gnl_error(bool *gnl_flag, char *error_message);
 int		check_gnl_error(char *line, bool gnl_flag, char *message);
 int		check_valid_ft_atoi(char *color_value);
 char	*init_error(int number);
+int		check_map_size(int height, int width);
+void	set_position(t_parse *parse, int *pos_count, int height, int width);
 
 #endif
