@@ -6,28 +6,30 @@
 /*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:05:11 by hmiyazak          #+#    #+#             */
-/*   Updated: 2024/09/08 15:03:22 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/09/08 17:13:53 by hmiyazak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
 static bool	check_file(char *filename);
-static int	init_cub(t_cub *cub, t_field *field);
+static int	init_mlx_instance(t_cub *cub);
+static int	init_cub(t_cub *cub);
 
 int	main(int argc, char *argv[])
 {
 	t_field		field;
 	t_cub		cub;
 
+	cub.field = &field;
 	if (argc != 2 || check_file(argv[1]) == false)
 		exit(perror_return_one("argument should be a readable file, *.cub\n"));
-	if (init_cub(&cub, &field) != 0)
+	if (init_mlx_instance(&cub) != 0 || parse_file(&cub, argv[1]) != 0)
 		exit(1);
-	if (parse_file(&cub, argv[1]) != 0)
+	if (init_cub(&cub) != 0)
 	{
-		mlx_destroy_image(cub.mlx, cub.img.img);
-		mlx_destroy_window(cub.mlx, cub.window);
+		free_str_array(field.map);
+		destroy_textures(cub.mlx, &field);
 		exit(1);
 	}
 	if (draw_scene(&cub, &field) != 0)
@@ -71,11 +73,16 @@ static bool	check_file(char *filename)
 	return (true);
 }
 
-static int	init_cub(t_cub *cub, t_field *field)
+static int	init_mlx_instance(t_cub *cub)
 {
 	cub->mlx = mlx_init();
 	if (cub->mlx == NULL)
 		return (perror_return_one("failed to init mlx\n"));
+	return (0);
+}
+
+static int	init_cub(t_cub *cub)
+{
 	cub->window = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 	if (cub->window == NULL)
 		return (perror_return_one("failed to create a new window\n"));
@@ -95,6 +102,5 @@ static int	init_cub(t_cub *cub, t_field *field)
 		mlx_destroy_image(cub->mlx, cub->img.img);
 		return (perror_return_one("failed to get image address\n"));
 	}
-	cub->field = field;
 	return (0);
 }
