@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_valid_map.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiyazak <hmiyazak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yususato <yususato@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:20:05 by yususato          #+#    #+#             */
-/*   Updated: 2024/09/08 14:34:51 by hmiyazak         ###   ########.fr       */
+/*   Updated: 2024/09/13 13:10:05 by yususato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	can_pass(t_field *field, t_parse *parse \
 	{
 		if (parse->yi == 0 || parse->yi == parse->height - 1 \
 			|| parse->xi == 0 \
-			|| parse->xi == (int)ft_strlen(field->map[parse->yi -1]) - 1)
+			|| parse->xi == (int)ft_strlen(field->map[parse->yi]) - 1)
 			return (perror_return_one("Map is not surrounded by walls\n"));
 		if (check_wall(field, parse) == false)
 			return (perror_return_one("Map is not surrounded by walls\n"));
